@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/header/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { FourOFourComponent } from './components/shared/four-o-four/four-o-four.component';
+import {ErrorInterceptor} from './interceptors/error.interceptor';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {JwtInterceptor} from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { FourOFourComponent } from './components/shared/four-o-four/four-o-four.
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
