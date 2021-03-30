@@ -1,0 +1,5 @@
+main {
+  background: url(../../../assets/images/fond.svg) no-repeat center center fixed !important;
+  background-size: cover !important;
+  height: calc(100vh - 56px);
+}

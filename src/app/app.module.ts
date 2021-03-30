@@ -9,13 +9,29 @@ import { FourOFourComponent } from './components/shared/four-o-four/four-o-four.
 import {ErrorInterceptor} from './interceptors/error.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {JwtInterceptor} from './interceptors/jwt.interceptor';
+import {AlertDangerComponent} from './components/shared/alert/danger/alert-danger.component';
+import {AlertWarningComponent} from './components/shared/alert/warning/alert-warning.component';
+import { SignInComponent } from './components/shared/sign-in/sign-in.component';
+import {ModalSuccessComponent} from './components/shared/modal/success/modal-success.component';
+import {ModalDangerComponent} from './components/shared/modal/danger/modal-danger.component';
+import {ModalWarningComponent} from './components/shared/modal/warning/modal-warning.component';
+import {ModalInfoComponent} from './components/shared/modal/info/modal-info.component';
+import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    FourOFourComponent
+    FourOFourComponent,
+    AlertDangerComponent,
+    AlertWarningComponent,
+    ModalSuccessComponent,
+    SignInComponent,
+    ModalDangerComponent,
+    ModalWarningComponent,
+    ModalInfoComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
