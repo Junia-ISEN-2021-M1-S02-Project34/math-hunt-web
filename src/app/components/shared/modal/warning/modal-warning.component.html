@@ -1,0 +1,29 @@
+<ng-template #warningModal>
+  <div class="border border-2 rounded border-warning">
+
+    <div class="modal-header text-warning">
+      <h4 class="modal-title">
+        <span class="bi bi-exclamation-diamond fs-2 me-2"></span>
+        {{ modalConfig.modalTitle }}
+      </h4>
+    </div>
+    <div class="modal-body fs-5">
+      {{ modalConfig.modalText }}
+    </div>
+    <div class="modal-footer">
+      <button type="button"
+              class="btn btn-secondary"
+              (click)="dismiss()"
+              *ngIf="modalConfig.hideDismissButton === undefined">
+        {{ modalConfig.dismissButtonLabel }}
+      </button>
+      <button type="button"
+              class="btn btn-warning"
+              (click)="action()"
+              *ngIf="modalConfig.hideActionButton === undefined">
+        {{ modalConfig.actionButtonLabel }}
+      </button>
+    </div>
+
+  </div>
+</ng-template>
