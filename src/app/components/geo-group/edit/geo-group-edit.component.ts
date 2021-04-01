@@ -123,7 +123,6 @@ export class GeoGroupEditComponent implements OnInit {
   fetchInfos(): void{
     this.geoGroupService.getGeoGroupById(this.geoGroup).subscribe((res: IGeoGroup) => {
         this.geoGroup = res;
-        console.log(this.geoGroup);
         this.editGeoGroupForm.patchValue(this.geoGroup);
       },
       error => {
