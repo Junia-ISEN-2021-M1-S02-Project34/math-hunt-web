@@ -25,7 +25,7 @@ export class PropositionService {
 
   getPropositionById(proposition: IProposition): Observable<IProposition> {
     return this.http.get<any>(`${this.apiUrl}/get/proposition/${proposition._id}`).pipe(
-      map(res => res.proposition)
+      map(res => res)
     );
   }
 

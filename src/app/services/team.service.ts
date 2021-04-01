@@ -25,7 +25,7 @@ export class TeamService {
 
   getTeamById(team: ITeam): Observable<ITeam> {
     return this.http.get<any>(`${this.apiUrl}/get/team/${team._id}`).pipe(
-      map(res => res.team)
+      map(res => res)
     );
   }
 

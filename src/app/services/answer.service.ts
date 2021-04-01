@@ -25,7 +25,7 @@ export class AnswerService {
 
   getAnswerById(answer: IAnswer): Observable<IAnswer> {
     return this.http.get<any>(`${this.apiUrl}/get/answer/${answer._id}`).pipe(
-      map(res => res.answer)
+      map(res => res)
     );
   }
 

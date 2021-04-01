@@ -25,7 +25,7 @@ export class HintService {
 
   getHintById(hint: IHint): Observable<IHint> {
     return this.http.get<any>(`${this.apiUrl}/get/hint/${hint._id}`).pipe(
-      map(res => res.hint)
+      map(res => res)
     );
   }
 

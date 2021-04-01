@@ -25,7 +25,7 @@ export class GameService {
 
   getGameById(game: IGame): Observable<IGame> {
     return this.http.get<any>(`${this.apiUrl}/get/game/${game._id}`).pipe(
-      map(res => res.game)
+      map(res => res)
     );
   }
 

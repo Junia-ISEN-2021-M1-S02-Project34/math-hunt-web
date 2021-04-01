@@ -25,7 +25,7 @@ export class GeoGroupService {
 
   getGeoGroupById(geoGroup: IGeoGroup): Observable<IGeoGroup> {
     return this.http.get<any>(`${this.apiUrl}/get/geoGroup/${geoGroup._id}`).pipe(
-      map(res => res.geoGroup)
+      map(res => res)
     );
   }
 

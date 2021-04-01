@@ -25,7 +25,7 @@ export class EnigmaService {
 
   getEnigmaById(enigma: IEnigma): Observable<IEnigma> {
     return this.http.get<any>(`${this.apiUrl}/get/enigma/${enigma._id}`).pipe(
-      map(res => res.enigma)
+      map(res => res)
     );
   }
 
