@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {IEnigma} from '../interfaces/enigma.interface';
+import {IGeoGroup} from '../interfaces/geoGroup.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,12 @@ export class EnigmaService {
 
   getEnigmaById(enigma: IEnigma): Observable<IEnigma> {
     return this.http.get<any>(`${this.apiUrl}/get/enigma/${enigma._id}`).pipe(
+      map(res => res)
+    );
+  }
+
+  getEnigmasByGeoGroupId(geoGroup: IGeoGroup): Observable<IEnigma[]> {
+    return this.http.get<any>(`${this.apiUrl}/get/enigmas/geoGroup/${geoGroup._id}`).pipe(
       map(res => res)
     );
   }
