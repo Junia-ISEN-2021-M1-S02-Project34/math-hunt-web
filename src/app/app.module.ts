@@ -7,7 +7,7 @@ import { NavbarComponent } from './components/shared/header/navbar/navbar.compon
 import { HomeComponent } from './components/home/home.component';
 import { FourOFourComponent } from './components/shared/four-o-four/four-o-four.component';
 import {ErrorInterceptor} from './interceptors/error.interceptor';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {JwtInterceptor} from './interceptors/jwt.interceptor';
 import {AlertDangerComponent} from './components/shared/alert/danger/alert-danger.component';
 import {AlertWarningComponent} from './components/shared/alert/warning/alert-warning.component';
@@ -17,6 +17,9 @@ import {ModalDangerComponent} from './components/shared/modal/danger/modal-dange
 import {ModalWarningComponent} from './components/shared/modal/warning/modal-warning.component';
 import {ModalInfoComponent} from './components/shared/modal/info/modal-info.component';
 import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
+import { GeoGroupComponent } from './components/geo-group/geo-group.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import { GeoGroupEditComponent } from './components/geo-group/edit/geo-group-edit.component';
 
 @NgModule({
   declarations: [
@@ -32,10 +35,14 @@ import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
     ModalWarningComponent,
     ModalInfoComponent,
     SignUpComponent,
+    GeoGroupComponent,
+    GeoGroupEditComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
