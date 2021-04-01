@@ -32,7 +32,7 @@ export class EnigmaService {
 
   getEnigmasByGeoGroupId(geoGroup: IGeoGroup): Observable<IEnigma[]> {
     return this.http.get<any>(`${this.apiUrl}/get/enigmas/geoGroup/${geoGroup._id}`).pipe(
-      map(res => res)
+      map(res => res.enigmas)
     );
   }
 
