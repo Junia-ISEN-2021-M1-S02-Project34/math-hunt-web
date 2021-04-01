@@ -1,0 +1,129 @@
+<app-modal-danger #dangerModal [modalConfig]="dangerModalConfig"></app-modal-danger>
+<app-modal-success #successModal [modalConfig]="successModalConfig"></app-modal-success>
+<app-alert-danger *ngIf="dangerAlertConfig" [alertConfig]="dangerAlertConfig"></app-alert-danger>
+
+<!-- New geoGroup button -->
+<button class="btn btn-primary bi bi-geo mt-3 ms-3 shadow" (click)="onButtonNew()" type="button"> Nouveau GeoGroup</button>
+
+<!-- block create geoGroup -->
+<div *ngIf="displayNewGeoGroupForm" class="container mt-1" style="max-width: 40em">
+
+  <div class="card shadow">
+
+    <!-- header -->
+    <div class="card-header pt-3">
+      <div class="d-flex flex-row align-items-center">
+        <h4 class="bi bi-plus-circle me-2"></h4>
+        <h4 class="align-middle">Créer un GeoGroup</h4>
+      </div>
+    </div>
+
+    <!-- body -->
+    <div class="card-body">
+
+      <form [formGroup]="addGeoGroupForm" class="d-flex flex-column" novalidate="novalidate" (ngSubmit)="onSubmitAddForm()">
+
+        <!-- name -->
+        <div class="mb-3">
+          <label class="form-label" for="name">Nom</label>
+          <input class="form-control" id="name" type="text" name="name" placeholder="Nom GeoGroup" autocomplete="off" required="required"
+                 formControlName="name"  [ngClass]="{ 'is-invalid': submitted && name.invalid }"/>
+        </div>
+
+        <div class="d-flex flex-row">
+
+          <!-- positionX -->
+          <div class="mb-3 w-50 me-4">
+            <label class="form-label" for="positionX">PosX</label>
+            <input class="form-control" id="positionX" type="number" name="positionX" placeholder="" autocomplete="off" required="required"
+                   formControlName="positionX"  [ngClass]="{ 'is-invalid': submitted && positionX.invalid }"/>
+          </div>
+
+          <!-- positionY -->
+          <div class="mb-3 w-50">
+            <label class="form-label" for="positionY">PosY</label>
+            <input class="form-control" id="positionY" type="number" name="positionY" placeholder="" autocomplete="off" required="required"
+                   formControlName="positionY"  [ngClass]="{ 'is-invalid': submitted && positionY.invalid }"/>
+          </div>
+
+        </div>
+
+        <!-- radius -->
+        <div class="mb-3">
+          <label class="form-label" for="radius">Rayon</label>
+          <input class="form-control" id="radius" type="number" name="radius" placeholder="" required="required"
+                 formControlName="radius"  [ngClass]="{ 'is-invalid': submitted && radius.invalid }"/>
+        </div>
+
+        <!-- pictureUrl -->
+        <div class="mb-3">
+          <label class="form-label" for="pictureUrl">Image</label>
+          <input class="form-control" id="pictureUrl" type="file" name="pictureUrl" placeholder="" required="required"
+                 formControlName="pictureUrl"  [ngClass]="{ 'is-invalid': submitted && pictureUrl.invalid }"/>
+        </div>
+
+        <!-- submit -->
+        <div class="d-flex flex-row justify-content-end">
+          <div class="mb-0 align-self-end me-3">
+            <button type="submit" class="btn btn-outline-danger bi bi-x"
+                    (click)="displayNewGeoGroupForm=false;"> Annuler</button>
+          </div>
+          <div class="mb-0 align-self-end">
+            <button type="submit" class="btn btn-primary bi bi-plus-circle"> Créer</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- block list geoGroups -->
+<div class="container mt-4">
+
+  <div class="card shadow">
+
+    <!-- header -->
+    <div class="card-header pt-3">
+      <div class="d-flex flex-row align-items-center">
+        <h4 class="bi bi-list me-2"></h4>
+        <h4 class="align-middle">Liste des GeoGroup</h4>
+      </div>
+    </div>
+
+    <!-- body -->
+    <div class="card-body p-0">
+
+      <div class="table-responsive">
+
+        <table class="table table-striped text-center align-middle mb-0">
+          <!-- table head -->
+          <thead>
+          <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <!-- table body -->
+          <tbody>
+          <tr *ngFor="let gg of geoGroups">
+            <td class="text-nowrap">{{gg.name}}</td>
+            <td class="text-center">
+              <div class="d-flex flex-row justify-content-center">
+                <button type="button" class="btn btn btn-sm btn-outline-primary bi bi-pencil me-2" (click)="onButtonEdit(gg)"> Modifier</button>
+                <button type="button" class="btn btn-sm btn-outline-danger bi bi-trash" (click)="onButtonDelete(gg)"> Supprimer</button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
