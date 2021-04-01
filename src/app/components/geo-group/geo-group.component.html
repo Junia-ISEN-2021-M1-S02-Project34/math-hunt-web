@@ -2,7 +2,7 @@
 <app-modal-success #successModal [modalConfig]="successModalConfig"></app-modal-success>
 <app-alert-danger *ngIf="dangerAlertConfig" [alertConfig]="dangerAlertConfig"></app-alert-danger>
 
-<ng-container *ngIf="loading">
+<ng-container *ngIf="loading && !dangerAlertConfig">
   <div class="position-absolute top-50 start-50 translate-middle">
     <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;"></div>
   </div>
