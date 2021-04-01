@@ -24,6 +24,8 @@ export class GeoGroupComponent implements OnInit {
   successModalConfig = {} as ModalConfig;
   dangerAlertConfig: AlertConfig;
 
+  loading: boolean;
+
   // form
   displayNewGeoGroupForm: boolean;
   addGeoGroupForm: FormGroup;
@@ -108,9 +110,11 @@ export class GeoGroupComponent implements OnInit {
   /******************************************** */
 
   refreshData(): void{
+    this.loading = true;
     this.dangerAlertConfig = undefined;
     this.geoGroupService.getGeoGroups().subscribe((res: IGeoGroup[]) => {
         this.geoGroups = res;
+        this.loading = false;
       },
       error => {
         this.dangerAlertConfig = {} as AlertConfig;
