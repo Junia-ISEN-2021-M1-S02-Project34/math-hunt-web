@@ -6,136 +6,145 @@
 <app-modal-success #successModal [modalConfig]="successModalConfig"></app-modal-success>
 <app-alert-danger *ngIf="dangerAlertConfig" [alertConfig]="dangerAlertConfig"></app-alert-danger>
 
-
-<!-- block edit geogroup -->
-<div *ngIf="displayEditForm" class="container mt-1" style="max-width: 40em">
-
-  <div class="card shadow">
-
-    <!-- header -->
-    <div class="card-header pt-3">
-      <div class="d-flex flex-row align-items-center">
-        <h4 class="bi bi-file-medical me-2"></h4>
-        <h4 class="align-middle">Modifier un GeoGroup</h4>
-      </div>
-    </div>
-
-    <!-- body -->
-    <div class="card-body">
-
-      <form [formGroup]="editGeoGroupForm" class="d-flex flex-column" novalidate="novalidate" (ngSubmit)="onSubmitEditForm()">
-
-        <!-- name -->
-        <div class="mb-3">
-          <label class="form-label" for="name">Nom</label>
-          <input class="form-control" id="name" type="text" name="name" placeholder="Nom GeoGroup" autocomplete="off" required="required"
-                 formControlName="name"  [ngClass]="{ 'is-invalid': submitted && name.invalid }"/>
-        </div>
-
-        <div class="d-flex flex-row">
-
-          <!-- positionX -->
-          <div class="mb-3 w-50 me-4">
-            <label class="form-label" for="positionX">PosX</label>
-            <input class="form-control" id="positionX" type="number" name="positionX" placeholder="" autocomplete="off" required="required"
-                   formControlName="positionX"  [ngClass]="{ 'is-invalid': submitted && positionX.invalid }"/>
-          </div>
-
-          <!-- positionY -->
-          <div class="mb-3 w-50">
-            <label class="form-label" for="positionY">PosY</label>
-            <input class="form-control" id="positionY" type="number" name="positionY" placeholder="" autocomplete="off" required="required"
-                   formControlName="positionY"  [ngClass]="{ 'is-invalid': submitted && positionY.invalid }"/>
-          </div>
-
-        </div>
-
-        <!-- radius -->
-        <div class="mb-3">
-          <label class="form-label" for="radius">Rayon</label>
-          <input class="form-control" id="radius" type="number" name="radius" placeholder="" required="required"
-                 formControlName="radius"  [ngClass]="{ 'is-invalid': submitted && radius.invalid }"/>
-        </div>
-
-        <!-- pictureUrl -->
-        <div class="mb-3">
-          <label class="form-label" for="pictureUrl">Image</label>
-          <input class="form-control" id="pictureUrl" type="file" name="pictureUrl" placeholder="" required="required"
-                 formControlName="pictureUrl"  [ngClass]="{ 'is-invalid': submitted && pictureUrl.invalid }"/>
-        </div>
-
-        <!-- submit -->
-        <div class="d-flex flex-row justify-content-end">
-          <div class="mb-0 align-self-end me-3">
-            <button type="submit" class="btn btn-outline-danger bi bi-x"
-                    (click)="displayEditForm=false;"> Annuler</button>
-          </div>
-          <div class="mb-0 align-self-end">
-            <button type="submit" class="btn btn-primary bi bi-pencil"> Modifier</button>
-          </div>
-        </div>
-      </form>
-
-    </div>
-
+<ng-container *ngIf="loading && !dangerAlertConfig">
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;"></div>
   </div>
+</ng-container>
 
-</div>
+<ng-container *ngIf="!loading">
 
-<!-- block list enigmas by geoGroup -->
-<div class="container mt-4">
+  <!-- block edit geogroup -->
+  <div *ngIf="displayEditForm" class="container mt-1" style="max-width: 40em">
 
-  <div class="card shadow">
+    <div class="card shadow">
 
-    <!-- header -->
-    <div class="card-header pt-3">
-      <div class="d-flex flex-column">
-        <div class="d-flex flex-row align-items-center text-primary mb-2">
-          <h4 class="bi bi-geo me-2"></h4>
-          <h4 class="align-middle me-1">GeoGroup </h4>
-          <h4 class="align-middle me-3">: {{geoGroup.name}}</h4>
-          <button type="button" class="btn btn-outline-primary bi bi-pencil ms-auto" (click)="displayEditForm = true;"> Modifier le GeoGroup</button>
+      <!-- header -->
+      <div class="card-header pt-3">
+        <div class="d-flex flex-row align-items-center">
+          <h4 class="bi bi-file-medical me-2"></h4>
+          <h4 class="align-middle">Modifier un GeoGroup</h4>
         </div>
-    </div>
-
-    <div *ngIf="!enigmas || enigmas.length <= 0" class="card-body">
-      <div class="fs-4 text-primary">
-        Aucune énigmes
       </div>
-    </div>
 
-    <!-- body -->
-    <div *ngIf="enigmas && enigmas.length > 0" class="card-body p-0">
+      <!-- body -->
+      <div class="card-body">
 
-      <div class="table-responsive">
+        <form [formGroup]="editGeoGroupForm" class="d-flex flex-column" novalidate="novalidate" (ngSubmit)="onSubmitEditForm()">
 
-        <table class="table table-striped text-center align-middle mb-0">
-          <!-- table head -->
-          <thead>
-          <tr>
-            <th scope="col">Code article</th>
-            <th scope="col">Désignation</th>
-            <th scope="col">Client</th>
-            <th scope="col">Action</th>
-          </tr>
-          </thead>
-          <!-- table body -->
-          <tbody>
-          <tr *ngFor="let a of enigmas">
-            <td class="text-nowrap" id="uuid">{{a.code}}</td>
-            <td class="text-nowrap text-start">{{a.designation}}</td>
-            <td class="text-nowrap">{{a.client}}</td>
-            <td class="text-center">
-              <button type="button" class="btn btn-sm btn-outline-warning bi bi-dash-square" (click)="onButtonRemove(a)"> Supprimer du GeoGroup</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+          <!-- name -->
+          <div class="mb-3">
+            <label class="form-label" for="name">Nom</label>
+            <input class="form-control" id="name" type="text" name="name" placeholder="Nom GeoGroup" autocomplete="off" required="required"
+                   formControlName="name"  [ngClass]="{ 'is-invalid': submitted && name.invalid }"/>
+          </div>
+
+          <div class="d-flex flex-row">
+
+            <!-- positionX -->
+            <div class="mb-3 w-50 me-4">
+              <label class="form-label" for="positionX">PosX</label>
+              <input class="form-control" id="positionX" type="number" name="positionX" placeholder="" autocomplete="off" required="required"
+                     formControlName="positionX"  [ngClass]="{ 'is-invalid': submitted && positionX.invalid }"/>
+            </div>
+
+            <!-- positionY -->
+            <div class="mb-3 w-50">
+              <label class="form-label" for="positionY">PosY</label>
+              <input class="form-control" id="positionY" type="number" name="positionY" placeholder="" autocomplete="off" required="required"
+                     formControlName="positionY"  [ngClass]="{ 'is-invalid': submitted && positionY.invalid }"/>
+            </div>
+
+          </div>
+
+          <!-- radius -->
+          <div class="mb-3">
+            <label class="form-label" for="radius">Rayon</label>
+            <input class="form-control" id="radius" type="number" name="radius" placeholder="" required="required"
+                   formControlName="radius"  [ngClass]="{ 'is-invalid': submitted && radius.invalid }"/>
+          </div>
+
+          <!-- pictureUrl -->
+          <div class="mb-3">
+            <label class="form-label" for="pictureUrl">Image</label>
+            <input class="form-control" id="pictureUrl" type="file" name="pictureUrl" placeholder="" required="required"
+                   formControlName="pictureUrl"  [ngClass]="{ 'is-invalid': submitted && pictureUrl.invalid }"/>
+          </div>
+
+          <!-- submit -->
+          <div class="d-flex flex-row justify-content-end">
+            <div class="mb-0 align-self-end me-3">
+              <button type="submit" class="btn btn-outline-danger bi bi-x"
+                      (click)="displayEditForm=false;"> Annuler</button>
+            </div>
+            <div class="mb-0 align-self-end">
+              <button type="submit" class="btn btn-primary bi bi-pencil"> Modifier</button>
+            </div>
+          </div>
+        </form>
 
       </div>
 
     </div>
 
   </div>
-</div>
+
+  <!-- block list enigmas by geoGroup -->
+  <div class="container mt-4">
+
+    <div class="card shadow">
+
+      <!-- header -->
+      <div class="card-header pt-3">
+        <div class="d-flex flex-column">
+          <div class="d-flex flex-row align-items-center text-primary mb-2">
+            <h4 class="bi bi-geo me-2"></h4>
+            <h4 class="align-middle me-1">GeoGroup </h4>
+            <h4 class="align-middle me-3">: {{geoGroup.name}}</h4>
+            <button type="button" class="btn btn-outline-primary bi bi-pencil ms-auto" (click)="displayEditForm = true;"> Modifier le GeoGroup</button>
+          </div>
+        </div>
+
+        <div *ngIf="!enigmas || enigmas.length <= 0" class="card-body">
+          <div class="fs-4 text-primary">
+            Aucune énigmes
+          </div>
+        </div>
+
+        <!-- body -->
+        <div *ngIf="enigmas && enigmas.length > 0" class="card-body p-0">
+
+          <div class="table-responsive">
+
+            <table class="table table-striped text-center align-middle mb-0">
+              <!-- table head -->
+              <thead>
+              <tr>
+                <th scope="col">Code article</th>
+                <th scope="col">Désignation</th>
+                <th scope="col">Client</th>
+                <th scope="col">Action</th>
+              </tr>
+              </thead>
+              <!-- table body -->
+              <tbody>
+              <tr *ngFor="let a of enigmas">
+                <td class="text-nowrap" id="uuid">{{a.code}}</td>
+                <td class="text-nowrap text-start">{{a.designation}}</td>
+                <td class="text-nowrap">{{a.client}}</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-outline-warning bi bi-dash-square" (click)="onButtonRemove(a)"> Supprimer du GeoGroup</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-container>
 

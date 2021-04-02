@@ -117,6 +117,7 @@ export class GeoGroupComponent implements OnInit {
         this.loading = false;
       },
       error => {
+        this.loading = false;
         this.dangerAlertConfig = {} as AlertConfig;
         this.dangerAlertConfig.alertTitle = 'Erreur lors de la récupération des geogroups.';
         this.dangerAlertConfig.alertText = 'La récupération des geogroups a échoué. Le serveur a renvoyé une erreur. Veuillez rafraichir la page.';

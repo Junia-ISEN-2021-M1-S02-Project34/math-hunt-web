@@ -27,6 +27,8 @@ export class GeoGroupEditComponent implements OnInit {
   successModalConfig = {} as ModalConfig;
   dangerAlertConfig: AlertConfig;
 
+  loading: boolean;
+
   // form
   displayEditForm = false;
   editGeoGroupForm: FormGroup;
@@ -107,11 +109,14 @@ export class GeoGroupEditComponent implements OnInit {
   /******************************************** */
 
   refreshData(): void{
+    this.loading = true;
     this.dangerAlertConfig = undefined;
     this.enigmaService.getEnigmasByGeoGroupId(this.geoGroup).subscribe((res: IEnigma[]) => {
         this.enigmas = res;
+        this.loading = false;
       },
       error => {
+        this.loading = false;
         this.dangerAlertConfig = {} as AlertConfig;
         this.dangerAlertConfig.alertTitle = 'Erreur lors de la récupération des énigmes.';
         this.dangerAlertConfig.alertText = 'La récupération des énigmes a échoué. Le serveur a renvoyé une erreur. Veuillez rafraichir la page.';
@@ -121,11 +126,14 @@ export class GeoGroupEditComponent implements OnInit {
   }
 
   fetchInfos(): void{
+    this.loading = true;
     this.geoGroupService.getGeoGroupById(this.geoGroup).subscribe((res: IGeoGroup) => {
         this.geoGroup = res;
         this.editGeoGroupForm.patchValue(this.geoGroup);
+        this.loading = false;
       },
       error => {
+        this.loading = false;
         this.dangerAlertConfig = {} as AlertConfig;
         this.dangerAlertConfig.alertTitle = 'Erreur lors de la récupération des infos du GeoGroup.';
         this.dangerAlertConfig.alertText = 'La récupération du GeoGroup a échoué. Le serveur a renvoyé une erreur. Veuillez rafraichir la page.';
