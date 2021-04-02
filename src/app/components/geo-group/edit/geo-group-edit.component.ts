@@ -104,6 +104,10 @@ export class GeoGroupEditComponent implements OnInit {
     this.router.navigate(['/geoGroups']);
   }
 
+  onButtonEnigma(enigma): void {
+    this.router.navigate(['/enigmas/edit'], { queryParams: { enigma: enigma._id } });
+  }
+
   /******************************************** */
   /************    Data fetcher     *************/
   /******************************************** */

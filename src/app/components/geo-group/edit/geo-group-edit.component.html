@@ -120,20 +120,16 @@
               <!-- table head -->
               <thead>
               <tr>
-                <th scope="col">Code article</th>
-                <th scope="col">Désignation</th>
-                <th scope="col">Client</th>
+                <th scope="col">Nom</th>
                 <th scope="col">Action</th>
               </tr>
               </thead>
               <!-- table body -->
               <tbody>
-              <tr *ngFor="let a of enigmas">
-                <td class="text-nowrap" id="uuid">{{a.code}}</td>
-                <td class="text-nowrap text-start">{{a.designation}}</td>
-                <td class="text-nowrap">{{a.client}}</td>
+              <tr *ngFor="let e of enigmas">
+                <td class="text-nowrap" id="uuid">{{e.name}}</td>
                 <td class="text-center">
-                  <button type="button" class="btn btn-sm btn-outline-warning bi bi-dash-square" (click)="onButtonRemove(a)"> Supprimer du GeoGroup</button>
+                  <button type="button" class="btn btn-sm btn-outline-warning bi bi-dash-square" (click)="onButtonEnigma(e)"> Modifier</button>
                 </td>
               </tr>
               </tbody>
