@@ -20,6 +20,9 @@ import { SignUpComponent } from './components/shared/sign-up/sign-up.component';
 import { GeoGroupComponent } from './components/geo-group/geo-group.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { GeoGroupEditComponent } from './components/geo-group/edit/geo-group-edit.component';
+import { EnigmaComponent } from './components/enigma/enigma.component';
+import { EnigmaEditComponent } from './components/enigma/edit/enigma-edit.component';
+import { EnigmaNewComponent } from './components/enigma/new/enigma-new.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { GeoGroupEditComponent } from './components/geo-group/edit/geo-group-edi
     SignUpComponent,
     GeoGroupComponent,
     GeoGroupEditComponent,
+    EnigmaComponent,
+    EnigmaEditComponent,
+    EnigmaNewComponent,
   ],
   imports: [
     BrowserModule,
