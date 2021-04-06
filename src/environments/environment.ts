@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiHostname: 'http://localhost:3000/api',
+  apiHostname: 'https://math-hunt-api.herokuapp.com/api',
 };
 
 /*
