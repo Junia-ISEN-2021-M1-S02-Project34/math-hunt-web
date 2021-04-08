@@ -7,6 +7,9 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {IEnigma} from '../../interfaces/enigma.interface';
 import {EnigmaService} from '../../services/enigma.service';
+import {AnswerService} from '../../services/answer.service';
+import {HintService} from '../../services/hint.service';
+import {PropositionService} from '../../services/proposition.service';
 
 @Component({
   selector: 'app-enigma',
@@ -91,7 +94,7 @@ export class EnigmaComponent implements OnInit {
 
   deleteEnigma(enigma): void{
     this.enigmaService.deleteEnigma(enigma).subscribe(async () => {
-        this.successModalConfig.modalText = 'Enigma supprimé avec succès !';
+        this.successModalConfig.modalText = 'Enigme supprimé avec succès !';
         this.successModalConfig.closeAfterXSeconds = 3;
         await this.modalSuccessComponent.open().then(() => {
           this.refreshData();
