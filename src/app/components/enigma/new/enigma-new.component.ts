@@ -348,7 +348,6 @@ export class EnigmaNewComponent implements OnInit {
       }
       hintsRequests.push(this.hintService.postHint(h).pipe(map((res) => res)));
     }
-    console.log(hintsToAdd);
     forkJoin(
       hintsRequests
     ).subscribe(async (hints) => {
