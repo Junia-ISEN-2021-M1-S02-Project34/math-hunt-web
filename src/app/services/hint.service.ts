@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {IHint} from '../interfaces/hint.interface';
+import {IEnigma} from '../interfaces/enigma.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,12 @@ export class HintService {
 
   getHintById(hint: IHint): Observable<IHint> {
     return this.http.get<any>(`${this.apiUrl}/get/hint/${hint._id}`).pipe(
+      map(res => res)
+    );
+  }
+
+  getHintsByEnigmaId(enigma: IEnigma): Observable<IHint[]> {
+    return this.http.get<any>(`${this.apiUrl}/get/hint/enigma/${enigma._id}`).pipe(
       map(res => res)
     );
   }
