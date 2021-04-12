@@ -43,7 +43,7 @@ export class EnigmaService {
   }
 
   putEnigma(enigma: IEnigma): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/update/enigma/${enigma._id}`, enigma);
+    return this.http.put<any>(`${this.apiUrl}/update/enigma/${enigma._id}`, enigma);
   }
 
   deleteEnigma(enigma: IEnigma): Observable<any> {

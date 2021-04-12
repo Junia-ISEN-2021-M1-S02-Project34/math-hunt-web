@@ -30,7 +30,7 @@ export class AnswerService {
   }
 
   putAnswer(answer: IAnswer): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/update/answer/${answer._id}`, answer);
+    return this.http.put<any>(`${this.apiUrl}/update/answer/${answer._id}`, answer);
   }
 
   deleteAnswer(answer: IAnswer): Observable<any> {

@@ -37,7 +37,7 @@ export class HintService {
   }
 
   putHint(hint: IHint): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/update/hint/${hint._id}`, hint);
+    return this.http.put<any>(`${this.apiUrl}/update/hint/${hint._id}`, hint);
   }
 
   deleteHint(hint: IHint): Observable<any> {

@@ -30,7 +30,7 @@ export class PropositionService {
   }
 
   putProposition(proposition: IProposition): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/update/proposition/${proposition._id}`, proposition);
+    return this.http.put<any>(`${this.apiUrl}/update/proposition/${proposition._id}`, proposition);
   }
 
   deleteProposition(proposition: IProposition): Observable<any> {

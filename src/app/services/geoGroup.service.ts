@@ -30,7 +30,7 @@ export class GeoGroupService {
   }
 
   putGeoGroup(geoGroup: IGeoGroup): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/update/geoGroup/${geoGroup._id}`, geoGroup);
+    return this.http.put<any>(`${this.apiUrl}/update/geoGroup/${geoGroup._id}`, geoGroup);
   }
 
   deleteGeoGroup(geoGroup: IGeoGroup): Observable<any> {
