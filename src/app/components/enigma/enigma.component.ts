@@ -96,9 +96,8 @@ export class EnigmaComponent implements OnInit {
     this.enigmaService.deleteEnigma(enigma).subscribe(async () => {
         this.successModalConfig.modalText = 'Enigme supprimé avec succès !';
         this.successModalConfig.closeAfterXSeconds = 3;
-        await this.modalSuccessComponent.open().then(() => {
-          this.refreshData();
-        });
+        await this.modalSuccessComponent.open();
+        this.refreshData();
       },
       error => {
         this.dangerAlertConfig = {} as AlertConfig;
