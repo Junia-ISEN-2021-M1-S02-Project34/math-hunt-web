@@ -4,15 +4,19 @@ export interface ITeam {
   password: string;
   score: number;
   gameId: string;
-  progression: EnigmaStatus[];
+  progression: IEnigmaStatus[];
   currentEnigmaId: string;
+  currentGeoGroupId: string;
+  isConnected: boolean;
   updatedAt?: Date;
   createdAt?: Date;
   __v?: number;
 }
 
-interface EnigmaStatus {
+interface IEnigmaStatus {
   enigmaId: string;
+  geoGroupId: string;
   done: boolean;
   score: number;
+  usedHintsIds: string[];
 }
