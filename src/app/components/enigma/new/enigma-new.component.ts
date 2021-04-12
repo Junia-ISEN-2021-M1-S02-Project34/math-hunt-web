@@ -4,7 +4,7 @@ import {ModalSuccessComponent} from '../../shared/modal/success/modal-success.co
 import {IGeoGroup} from '../../../interfaces/geoGroup.interface';
 import {ModalConfig} from '../../shared/modal/modal.config';
 import {AlertConfig} from '../../shared/alert/alert.config';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {EnigmaService} from '../../../services/enigma.service';
 import {IEnigma} from '../../../interfaces/enigma.interface';
@@ -56,8 +56,7 @@ export class EnigmaNewComponent implements OnInit {
   scoreValue: FormControl;
   geoGroupId: FormControl;
   isActive: FormControl;
-  isLinked: FormControl;
-  nextEnigmaId: FormControl;
+  order: FormControl;
   enigmaFormSubmitted = false;
   // answer form
   answerForm: FormGroup;
@@ -100,11 +99,10 @@ export class EnigmaNewComponent implements OnInit {
     this.positionY = new FormControl(null, Validators.required);
     this.scoreValue = new FormControl(null, Validators.required);
     this.geoGroupId = new FormControl('', Validators.required);
-    this.nextEnigmaId = new FormControl('', Validators.required);
+    this.order = new FormControl(null, Validators.required);
     this.solution = new FormControl(null, Validators.required);
     this.attemptsNumber = new FormControl(null, Validators.required);
     this.isActive = new FormControl(true);
-    this.isLinked = new FormControl(false);
     this.isMcq = new FormControl(false);
     this.propositions = new FormArray([]);
     this.hints = new FormArray([]);
@@ -120,9 +118,8 @@ export class EnigmaNewComponent implements OnInit {
       positionY: this.positionY,
       scoreValue: this.scoreValue,
       geoGroupId: this.geoGroupId,
-      nextEnigmaId: this.nextEnigmaId,
+      order: this.order,
       isActive: this.isActive,
-      isLinked: this.isLinked,
     });
     this.answerForm = new FormGroup({
       solution: this.solution,
@@ -153,13 +150,6 @@ export class EnigmaNewComponent implements OnInit {
   onSubmitEnigmaForm(): void{
     this.enigmaFormSubmitted = true;
     this.dangerAlertConfig = undefined;
-    if (!this.isLinked.value){
-      this.enigmaForm.removeControl('nextEnigmaId');
-      this.enigmaForm.addControl('nextEnigmaId', new FormControl(null));
-    }
-    else {
-      this.enigmaForm.addControl('nextEnigmaId', new FormControl(null, Validators.required));
-    }
     if (this.enigmaForm.valid) {
       this.postEnigma();
       this.enigmaFormSubmitted = false;

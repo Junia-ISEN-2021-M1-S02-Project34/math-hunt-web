@@ -99,24 +99,11 @@
             </select>
           </div>
 
-          <!-- isLinked -->
-          <div class="">
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" id="isLinked" formControlName="isLinked"/>
-              <label class="form-check-label" for="isLinked">Lier à une autre énigme</label>
-            </div>
-          </div>
-
-          <!-- nextEnigmaId -->
-          <div class="" *ngIf="isLinked.value">
-            <label class="form-label" for="nextEnigmaId">Enigme</label>
-            <select class="form-select" id="nextEnigmaId" name="nextEnigmaId" required="required"
-                    formControlName="nextEnigmaId"  [ngClass]="{ 'is-invalid': isLinked.value && enigmaFormSubmitted && nextEnigmaId.invalid }">
-              <option value="">Sélectionner l'énigme suivante</option>
-              <ng-container *ngFor="let e of enigmas">
-                <option value="{{e._id}}">{{e.name}}</option>
-              </ng-container>
-            </select>
+          <!-- order -->
+          <div class="mb-3">
+            <label class="form-label" for="order">Ordre dans le GeoGroup</label>
+            <input class="form-control" id="order" type="number" name="order" placeholder="" required="required"
+                   formControlName="order"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && order.invalid }"/>
           </div>
 
         </div>
