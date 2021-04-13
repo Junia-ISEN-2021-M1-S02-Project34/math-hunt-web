@@ -42,7 +42,7 @@
           <!-- pictureUrl -->
           <div class="mb-3">
             <label class="form-label" for="pictureUrl">Image</label>
-            <input class="form-control" id="pictureUrl" type="file" name="pictureUrl" placeholder="" required="required"
+            <input class="form-control" id="pictureUrl" type="text" name="pictureUrl" placeholder=""
                    formControlName="pictureUrl"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && pictureUrl.invalid }"/>
           </div>
 
@@ -337,7 +337,7 @@
                 </div>
 
                 <!-- propositionToRemove -->
-                <div class="mb-3" *ngIf="isMcq.value">
+                <div class="mb-3" *ngIf="myAnswer.isMcq">
                   <label class="form-label" for="hintPropositionToRemove">Proposition à enlever</label>
                   <select class="form-select" id="hintPropositionToRemove" name="propositionToRemove" required="required"
                           formControlName="propositionToRemove"  [ngClass]="{ 'is-invalid': hintsFormSubmitted && tHints.controls[i].get('propositionToRemove').errors?.required }">

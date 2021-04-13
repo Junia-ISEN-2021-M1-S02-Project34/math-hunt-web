@@ -333,7 +333,7 @@ export class EnigmaNewComponent implements OnInit {
     const hintsRequests = [];
     for (const h of hintsToAdd){
       h.enigmaId = this.myEnigma._id;
-      if (!this.myAnswer.isMcq && h.propositionToRemove === ''){
+      if (!this.myAnswer.isMcq || h.propositionToRemove === ''){
         h.propositionToRemove = undefined;
       }
       hintsRequests.push(this.hintService.postHint(h).pipe(map((res) => res)));
