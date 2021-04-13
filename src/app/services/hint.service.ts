@@ -31,8 +31,8 @@ export class HintService {
   }
 
   getHintsByEnigmaId(enigma: IEnigma): Observable<IHint[]> {
-    return this.http.get<any>(`${this.apiUrl}/get/hint/enigma/${enigma._id}`).pipe(
-      map(res => res)
+    return this.http.get<any>(`${this.apiUrl}/get/hints/enigma/${enigma._id}`).pipe(
+      map(res => res.hints)
     );
   }
 
