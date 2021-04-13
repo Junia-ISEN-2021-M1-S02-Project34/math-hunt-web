@@ -104,38 +104,37 @@
             <button type="button" class="btn btn-outline-primary bi bi-pencil ms-auto" (click)="displayEditForm = true;"> Modifier le GeoGroup</button>
           </div>
         </div>
+      </div>
 
-        <div *ngIf="!enigmas || enigmas.length <= 0" class="card-body">
-          <div class="fs-4 text-primary">
-            Aucune énigmes
-          </div>
+      <div *ngIf="!enigmas || enigmas.length <= 0" class="card-body">
+        <div class="fs-4 text-primary">
+          Aucune énigmes
         </div>
+      </div>
 
-        <!-- body -->
-        <div *ngIf="enigmas && enigmas.length > 0" class="card-body p-0">
+      <!-- body -->
+      <div *ngIf="enigmas && enigmas.length > 0" class="card-body p-0">
 
-          <div class="table-responsive">
+        <div class="table-responsive">
 
-            <table class="table table-striped text-center align-middle mb-0">
-              <!-- table head -->
-              <thead>
-              <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Action</th>
-              </tr>
-              </thead>
-              <!-- table body -->
-              <tbody>
-              <tr *ngFor="let e of enigmas">
-                <td class="text-nowrap" id="uuid">{{e.name}}</td>
-                <td class="text-center">
-                  <button type="button" class="btn btn-sm btn-outline-warning bi bi-dash-square" (click)="onButtonEnigma(e)"> Modifier</button>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-
-          </div>
+          <table class="table table-striped text-center align-middle mb-0">
+            <!-- table head -->
+            <thead>
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <!-- table body -->
+            <tbody>
+            <tr *ngFor="let e of enigmas">
+              <td class="text-nowrap" id="uuid">{{e.name}}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-sm btn-outline-warning bi bi-dash-square" (click)="onButtonEnigma(e)"> Modifier</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
 
         </div>
 
