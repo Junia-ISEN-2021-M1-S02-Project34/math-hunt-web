@@ -1,0 +1,393 @@
+<!-- back button -->
+<button class="btn btn-primary bi bi-arrow-return-left mt-3 ms-3 shadow" (click)="onButtonBack()" type="button"> Retour à la liste des énigmes</button>
+
+
+<app-modal-danger #dangerModal [modalConfig]="dangerModalConfig"></app-modal-danger>
+<app-modal-success #successModal [modalConfig]="successModalConfig"></app-modal-success>
+<app-alert-danger *ngIf="dangerAlertConfig" [alertConfig]="dangerAlertConfig"></app-alert-danger>
+
+<ng-container *ngIf="loading && !dangerAlertConfig">
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;"></div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!loading">
+  <!-- block enigma -->
+  <div class="container mt-4 w-75 pb-4">
+    <form [formGroup]="enigmaForm" novalidate="novalidate">
+      <div class="card shadow">
+
+        <!-- header -->
+        <div class="card-header text-primary p-0">
+          <button
+            class="card-header accordion-button collapsed bg-transparent text-primary fs-4 fw-bold pt-2 pb-1" type="button" [attr.data-bs-target]="'.collapseEnigma'" data-bs-toggle="collapse">
+            Énigme
+          </button>
+        </div>
+
+        <!-- body -->
+        <div class="card-body pb-3 collapseEnigma collapse">
+
+          <div class="d-flex flex-column">
+
+            <!-- name -->
+            <div class="mb-3">
+              <label class="form-label" for="name">Nom</label>
+              <input class="form-control" id="name" type="text" name="name" placeholder="Nom énigme" autocomplete="off" required="required"
+                     formControlName="name"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && name.invalid }"/>
+            </div>
+
+            <!-- description -->
+            <div class="mb-3">
+              <label class="form-label" for="description">Description</label>
+              <textarea class="form-control" id="description" type="text" name="description" autocomplete="off" required="required"
+                        formControlName="description"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && description.invalid }">
+              </textarea>
+            </div>
+
+            <!-- pictureUrl -->
+            <div class="mb-3">
+              <label class="form-label" for="pictureUrl">Image</label>
+              <input class="form-control" id="pictureUrl" type="text" name="pictureUrl" placeholder="https://"
+                     formControlName="pictureUrl"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && pictureUrl.invalid }"/>
+            </div>
+
+            <!-- question -->
+            <div class="mb-3">
+              <label class="form-label" for="question">Question</label>
+              <textarea class="form-control" id="question" type="text" name="question" autocomplete="off" required="required"
+                        formControlName="question"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && question.invalid }">
+              </textarea>
+            </div>
+
+            <div class="d-flex flex-row">
+
+              <!-- positionX -->
+              <div class="mb-3 w-50 me-4">
+                <label class="form-label" for="positionX">PosX</label>
+                <input class="form-control" id="positionX" type="number" name="positionX" placeholder="" autocomplete="off" required="required"
+                       formControlName="positionX"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && positionX.invalid }"/>
+              </div>
+
+              <!-- positionY -->
+              <div class="mb-3 w-50">
+                <label class="form-label" for="positionY">PosY</label>
+                <input class="form-control" id="positionY" type="number" name="positionY" placeholder="" autocomplete="off" required="required"
+                       formControlName="positionY"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && positionY.invalid }"/>
+              </div>
+
+            </div>
+
+            <!-- scoreValue -->
+            <div class="mb-3">
+              <label class="form-label" for="scoreValue">Score</label>
+              <input class="form-control" id="scoreValue" type="number" name="scoreValue" placeholder="" required="required"
+                     formControlName="scoreValue"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && scoreValue.invalid }"/>
+            </div>
+
+            <!-- isActive -->
+            <div class="mb-3">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="isActive" formControlName="isActive"/>
+                <label class="form-check-label" for="isActive">Enigme active</label>
+              </div>
+            </div>
+
+            <!-- geoGroupId -->
+            <div class="mb-3">
+              <label class="form-label" for="geoGroupId">GeoGroup</label>
+              <select class="form-select" id="geoGroupId" name="geoGroupId" required="required"
+                      formControlName="geoGroupId"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && geoGroupId.invalid }">
+                <option value="">Sélectionner le geoGroup</option>
+                <ng-container *ngFor="let gg of geoGroups">
+                  <option value="{{gg._id}}">{{gg.name}}</option>
+                </ng-container>
+              </select>
+            </div>
+
+            <!-- order -->
+            <div class="mb-3">
+              <label class="form-label" for="order">Ordre dans le GeoGroup</label>
+              <input class="form-control" id="order" type="number" name="order" placeholder="" required="required"
+                     formControlName="order"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && order.invalid }"/>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- form footer -->
+        <div class="card-footer collapseEnigma collapse">
+          <div class="row">
+            <div class="col">
+
+              <!-- cancel button -->
+              <button [disabled]="loading" class="btn btn-outline-danger bi bi-x-circle-fill w-100" type="button" (click)="onCancel()"> Annuler</button>
+
+            </div>
+            <div class="col">
+
+              <!-- submit button -->
+              <button [disabled]="loading" class="btn btn-primary w-100" type="button" (click)="onSubmitEnigmaForm()">
+                <span *ngIf="!loading" class="bi bi-arrow-return-right me-1"></span>
+                <span *ngIf="!loading" >Modifier</span>
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <!-- block answer -->
+  <div class="container mt-4 w-75 pb-4">
+    <form [formGroup]="answerForm" novalidate="novalidate">
+      <div class="card shadow mt-2">
+
+        <!-- header -->
+        <div class="card-header text-primary p-0">
+          <button
+            class="card-header accordion-button collapsed bg-transparent text-primary fs-4 fw-bold pt-2 pb-1" type="button" [attr.data-bs-target]="'.collapseAnswer'" data-bs-toggle="collapse">
+            Réponse
+          </button>
+        </div>
+
+        <!-- body -->
+        <div class="card-body collapse collapseAnswer">
+
+          <div class="d-flex flex-column">
+
+            <!-- solution -->
+            <div class="mb-3">
+              <label class="form-label" for="solution">Solution</label>
+              <input class="form-control" id="solution" type="text" name="solution" placeholder="Solution" autocomplete="off" required="required"
+                     formControlName="solution"  [ngClass]="{ 'is-invalid': answerFormSubmitted && solution.invalid }"/>
+            </div>
+
+            <!-- attemptsNumber -->
+            <div class="mb-3">
+              <label class="form-label" for="attemptsNumber">Nombre d'essais</label>
+              <input class="form-control" id="attemptsNumber" type="number" name="attemptsNumber" autocomplete="off" required="required"
+                     formControlName="attemptsNumber"  [ngClass]="{ 'is-invalid': answerFormSubmitted && attemptsNumber.invalid }"/>
+            </div>
+
+            <!-- isMcq -->
+            <div class="">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="isMcq" formControlName="isMcq" (change)="onIsMcqToggle()"/>
+                <label class="form-check-label" for="isMcq">QCM</label>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- form footer -->
+        <div class="card-footer collapse collapseAnswer" *ngIf="!isMcq.value">
+          <div class="row">
+            <div class="col">
+
+              <!-- cancel button -->
+              <button [disabled]="loading" class="btn btn-outline-danger bi bi-x-circle-fill w-100" type="button" (click)="onCancel()"> Annuler</button>
+
+            </div>
+            <div class="col">
+
+              <!-- submit button -->
+              <button [disabled]="loading" class="btn btn-primary w-100" type="button" (click)="onSubmitAnswerForm()">
+                <span *ngIf="!loading" class="bi bi-arrow-return-right me-1"></span>
+                <span *ngIf="!loading" >Suivant</span>
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="card shadow mt-2 collapse collapseAnswer" *ngIf="isMcq.value">
+
+        <!-- header -->
+        <div class="card-header pt-3 text-primary">
+          <div class="d-flex flex-row align-items-center">
+            <h4 class="bi bi-plus-circle me-2"></h4>
+            <h4 class="align-middle">Propositions du QCM</h4>
+          </div>
+        </div>
+
+        <!-- body -->
+        <div class="card-body collapse collapseAnswer">
+
+          <div class="d-flex flex-column">
+
+            <!-- label group -->
+            <div class="row mb-4 justify-content-center">
+              <div class="col">
+                <label class="col-form-label">Ajouter une proposition</label>
+                <!-- button to add a new tool -->
+                <button class="btn btn-sm btn-secondary ms-2 bi-plus-circle-fill" type="button" (click)="onPropositionAdd()"></button>
+              </div>
+            </div>
+
+            <!-- input group -->
+            <div class="row" >
+              <!-- input -->
+              <div class="d-flex flex-row mx-auto mb-3 justify-content-center"
+                   *ngFor="let proposition of tPropositions.controls; let i = index">
+
+                <ng-container [formGroup]="proposition">
+                  <input class="form-control" type="text" name="proposition" placeholder="Proposition" autocomplete="off" required="required"
+                         formControlName="text"  [ngClass]="{ 'is-invalid': answerFormSubmitted && proposition.invalid }"/>
+
+                  <button class="btn btn-secondary ms-3 bi-dash-circle-fill" type="button" (click)="onPropositionDelete(proposition.value, i)"></button>
+                </ng-container>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- form footer -->
+        <div class="card-footer collapse collapseAnswer">
+          <div class="row">
+            <div class="col">
+
+              <!-- cancel button -->
+              <button [disabled]="loading" class="btn btn-outline-danger bi bi-x-circle-fill w-100" type="button" (click)="onCancel()"> Annuler</button>
+
+            </div>
+            <div class="col">
+
+              <!-- submit button -->
+              <button [disabled]="loading" class="btn btn-primary w-100" type="button" (click)="onSubmitAnswerForm()">
+                <span *ngIf="!loading" class="bi bi-arrow-return-right me-1"></span>
+                <span *ngIf="!loading" >Modifier</span>
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <!-- block hint -->
+  <div class="container mt-4 w-75 pb-4">
+    <form [formGroup]="answerForm" novalidate="novalidate" (ngSubmit)="onSubmitHintForm()">
+      <div class="card shadow mt-2">
+
+        <!-- header -->
+        <div class="card-header text-primary p-0">
+          <button
+            class="card-header accordion-button collapsed bg-transparent text-primary fs-4 fw-bold pt-2 pb-1" type="button" [attr.data-bs-target]="'.collapseHint'" data-bs-toggle="collapse">
+            Indices
+          </button>
+        </div>
+
+        <!-- body -->
+        <div class="card-body collapse collapseHint">
+
+          <div class="d-flex flex-column">
+
+            <!-- label group -->
+            <div class="row justify-content-center">
+              <div class="col">
+                <label class="col-form-label">Ajouter un indice</label>
+                <!-- button to add a new tool -->
+                <button class="btn btn-sm btn-secondary ms-2 bi-plus-circle-fill" type="button" (click)="onHintAdd()"></button>
+              </div>
+            </div>
+
+            <!-- input group -->
+            <div class="mt-4" *ngIf="tHints.length > 0">
+              <div class="d-flex flex-column mx-auto mb-3 justify-content-center border rounded rounded-3 p-2"
+                   *ngFor="let hint of tHints.controls; let i = index">
+
+                <ng-container [formGroup]="hint">
+
+                  <!-- name -->
+                  <div class="mb-3">
+                    <label class="form-label" for="hintName">Nom</label>
+                    <input class="form-control" id="hintName" type="text" name="name" autocomplete="off" required="required"
+                           formControlName="name"  [ngClass]="{ 'is-invalid': hintsFormSubmitted && tHints.controls[i].get('name').errors?.required }"/>
+                  </div>
+
+                  <!-- text -->
+                  <div class="mb-3">
+                    <label class="form-label" for="hintText">Text</label>
+                    <textarea class="form-control" id="hintText" type="text" name="text" autocomplete="off" required="required"
+                              formControlName="text"  [ngClass]="{ 'is-invalid': hintsFormSubmitted && tHints.controls[i].get('text').errors?.required }">
+                    </textarea>
+                  </div>
+
+                  <!-- rank -->
+                  <div class="mb-3">
+                    <label class="form-label" for="hintRank">Rang</label>
+                    <input class="form-control" id="hintRank" type="number" name="rank" autocomplete="off" required="required"
+                           formControlName="rank"  [ngClass]="{ 'is-invalid': hintsFormSubmitted && tHints.controls[i].get('rank').errors?.required }"/>
+                  </div>
+
+                  <!-- penalty -->
+                  <div class="mb-3">
+                    <label class="form-label" for="hintPenalty">Malus</label>
+                    <input class="form-control" id="hintPenalty" type="number" name="penalty" autocomplete="off" required="required"
+                           formControlName="penalty"  [ngClass]="{ 'is-invalid': hintsFormSubmitted && tHints.controls[i].get('penalty').errors?.required }"/>
+                  </div>
+
+                  <!-- propositionToRemove -->
+                  <div class="mb-3" *ngIf="isMcq.value">
+                    <label class="form-label" for="hintPropositionToRemove">Proposition à enlever</label>
+                    <select class="form-select" id="hintPropositionToRemove" name="propositionToRemove"
+                            formControlName="propositionToRemove"  [ngClass]="{ 'is-invalid': hintsFormSubmitted && tHints.controls[i].get('propositionToRemove').errors?.required }">
+                      <option value="">Sélectionner la proposition à enlever</option>
+                      <ng-container *ngFor="let proposition of myPropositions">
+                        <option value="{{proposition._id}}">{{proposition.text}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+
+                  <button class="btn btn-secondary bi-dash-circle-fill" type="button" (click)="onHintDelete(hint.value,i)"></button>
+
+                </ng-container>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- form footer -->
+        <div class="card-footer collapse collapseHint">
+          <div class="row">
+            <div class="col">
+
+              <!-- cancel button -->
+              <button [disabled]="loading" class="btn btn-outline-danger bi bi-x-circle-fill w-100" type="button" (click)="onCancel()"> Annuler</button>
+
+            </div>
+            <div class="col">
+
+              <!-- submit button -->
+              <button [disabled]="loading" class="btn btn-primary w-100" type="button" (click)="onSubmitHintForm()">
+                <span *ngIf="!loading" class="bi bi-arrow-return-right me-1"></span>
+                <span *ngIf="!loading" >Modifier</span>
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</ng-container>
