@@ -118,28 +118,43 @@
       <!-- body -->
       <div *ngIf="enigmas && enigmas.length > 0" class="card-body p-0">
 
-        <div class="table-responsive">
-
-          <table class="table table-striped text-center align-middle mb-0">
-            <!-- table head -->
-            <thead>
-            <tr>
-              <th scope="col">Nom</th>
-              <th scope="col">Action</th>
-            </tr>
-            </thead>
-            <!-- table body -->
-            <tbody>
-            <tr *ngFor="let e of enigmas">
-              <td class="text-nowrap" id="uuid">{{e.name}}</td>
-              <td class="text-center">
-                <button type="button" class="btn btn-sm btn-outline-warning bi bi-pencil" (click)="onButtonEnigma(e)"> Modifier l'énigme</button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-
+        <div *ngIf="loadingInTab && !dangerAlertConfig" class="text-center">
+          <div class="spinner-border m-2 text-secondary text-center" style="width: 2rem; height: 2rem;"></div>
         </div>
+
+        <ng-container *ngIf="!loadingInTab">
+
+          <div class="table-responsive">
+
+            <table class="table table-striped text-center align-middle mb-0">
+
+              <!-- table head -->
+              <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Nom</th>
+                <th scope="col">Rang</th>
+                <th scope="col">Action</th>
+              </tr>
+              </thead>
+              <!-- table body -->
+              <tbody *ngIf="!loadingInTab" [sortablejs]="enigmas" [sortablejsOptions]="sortOptions">
+              <tr *ngFor="let e of enigmas">
+                <td class="bi bi-list fs-4"></td>
+                <td class="text-nowrap">{{e.name}}</td>
+                <td class="text-nowrap">{{e.order}}</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-outline-warning bi bi-pencil" (click)="onButtonEnigma(e)"> Modifier l'énigme</button>
+                </td>
+              </tr>
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </ng-container>
+
 
       </div>
     </div>

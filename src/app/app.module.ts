@@ -23,6 +23,7 @@ import { GeoGroupEditComponent } from './components/geo-group/edit/geo-group-edi
 import { EnigmaComponent } from './components/enigma/enigma.component';
 import { EnigmaEditComponent } from './components/enigma/edit/enigma-edit.component';
 import { EnigmaNewComponent } from './components/enigma/new/enigma-new.component';
+import {SortablejsModule} from 'ngx-sortablejs';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { EnigmaNewComponent } from './components/enigma/new/enigma-new.component
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SortablejsModule.forRoot({ animation: 150 }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

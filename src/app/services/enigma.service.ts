@@ -38,7 +38,11 @@ export class EnigmaService {
 
   getEnigmasByGeoGroupId(geoGroup: IGeoGroup): Observable<IEnigma[]> {
     return this.http.get<any>(`${this.apiUrl}/get/enigmas/geoGroup/${geoGroup._id}`).pipe(
-      map(res => res.enigmas)
+      map(res => res.enigmas.sort((a: IEnigma, b: IEnigma) => {
+        if (a.order < b.order) { return -1; }
+        if (a.order > b.order) { return 1; }
+        return 0;
+      }))
     );
   }
 

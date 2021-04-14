@@ -9,6 +9,10 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EnigmaService} from '../../../services/enigma.service';
 import {GeoGroupService} from '../../../services/geoGroup.service';
+import {SortableOptions} from 'sortablejs';
+import {map} from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
+import {IProposition} from '../../../interfaces/proposition.interface';
 
 @Component({
   selector: 'app-geo-group-edit',
@@ -22,12 +26,16 @@ export class GeoGroupEditComponent implements OnInit {
   geoGroup = {} as IGeoGroup;
   enigmas: IEnigma[];
 
+  sortOptions: SortableOptions = {
+  };
+
   // alert & modal
   dangerModalConfig = {} as ModalConfig;
   successModalConfig = {} as ModalConfig;
   dangerAlertConfig: AlertConfig;
 
   loading: boolean;
+  loadingInTab: boolean;
 
   // form
   displayEditForm = false;
@@ -51,6 +59,11 @@ export class GeoGroupEditComponent implements OnInit {
       this.refreshData();
       this.createFormControls();
       this.createForms();
+      this.sortOptions = {
+        onUpdate: (event: any) => {
+          this.updateEnigmasOrder();
+        }
+      };
     }
     else {
       this.router.navigate(['/geoGroups']);
@@ -113,14 +126,14 @@ export class GeoGroupEditComponent implements OnInit {
   /******************************************** */
 
   refreshData(): void{
-    this.loading = true;
+    this.loadingInTab = true;
     this.dangerAlertConfig = undefined;
     this.enigmaService.getEnigmasByGeoGroupId(this.geoGroup).subscribe((res: IEnigma[]) => {
         this.enigmas = res;
-        this.loading = false;
+        this.loadingInTab = false;
       },
       error => {
-        this.loading = false;
+        this.loadingInTab = false;
         this.dangerAlertConfig = {} as AlertConfig;
         this.dangerAlertConfig.alertTitle = 'Erreur lors de la récupération des énigmes.';
         this.dangerAlertConfig.alertText = 'La récupération des énigmes a échoué. Le serveur a renvoyé une erreur. Veuillez rafraichir la page.';
@@ -169,6 +182,28 @@ export class GeoGroupEditComponent implements OnInit {
         this.dangerAlertConfig.alertTitle = 'Erreur lors de la modification du GeoGroup';
         this.dangerAlertConfig.alertError = error.message;
         this.dangerAlertConfig.dismissButton = true;
+      });
+  }
+
+  updateEnigmasOrder(): void{
+    this.loadingInTab = true;
+    const requests = [];
+    for (const [index, value] of this.enigmas.entries()){
+      value.order = index + 1;
+      requests.push(this.enigmaService.putEnigma(value).pipe(map((res) => res)));
+    }
+    forkJoin(
+      requests
+    ).subscribe(async (enigmas: IEnigma[]) => {
+      this.refreshData();
+    },
+      error => {
+        this.loading = false;
+        this.dangerAlertConfig = {} as AlertConfig;
+        this.dangerAlertConfig.alertTitle = 'Erreur lors de la modification de l\'ordre des énigmes';
+        this.dangerAlertConfig.alertText = 'Veuillez réessayer.';
+        this.dangerAlertConfig.dismissButton = true;
+        this.dangerAlertConfig.alertError = error.message;
       });
   }
 
