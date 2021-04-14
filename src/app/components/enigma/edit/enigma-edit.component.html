@@ -188,7 +188,7 @@
         </div>
 
         <!-- form footer -->
-        <div class="card-footer collapse collapseAnswer" *ngIf="!isMcq.value">
+        <div class="card-footer collapse collapseAnswer" [hidden]="isMcq.value">
           <div class="row">
             <div class="col">
 
@@ -210,7 +210,7 @@
         </div>
 
       </div>
-      <div class="card shadow mt-2 collapse collapseAnswer" *ngIf="isMcq.value">
+      <div class="card shadow mt-2 collapse collapseAnswer" [hidden]="!isMcq.value">
 
         <!-- header -->
         <div class="card-header pt-3 text-primary">

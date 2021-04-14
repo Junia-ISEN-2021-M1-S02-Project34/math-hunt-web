@@ -177,12 +177,23 @@ export class EnigmaEditComponent implements OnInit {
     }
   }
 
-  onIsMcqToggle(): void {
-    if (this.isMcq.value && this.tPropositions.length < 1){
+  async onIsMcqToggle(): Promise<void> {
+    if (this.isMcq.value) {
       this.onPropositionAdd();
-    }
-    else if (!this.isMcq.value){
-      this.tPropositions.clear();
+    } else {
+      this.dangerAlertConfig = undefined;
+      this.dangerModalConfig.modalTitle = 'Confirmer la supression ?';
+      this.dangerModalConfig.modalText = `Voulez-vous vraiment supprimer les propositions ?`;
+      this.dangerModalConfig.actionButtonLabel = 'Oui';
+      this.dangerModalConfig.dismissButtonLabel = 'Annuler';
+      await this.modalDangerComponent.open().then((r) => {
+        if (r === 'Oui') {
+          this.tPropositions.clear();
+        }
+        else {
+          this.isMcq.patchValue(true);
+        }
+      });
     }
   }
 
