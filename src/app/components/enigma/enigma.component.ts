@@ -3,13 +3,11 @@ import {ModalDangerComponent} from '../shared/modal/danger/modal-danger.componen
 import {ModalSuccessComponent} from '../shared/modal/success/modal-success.component';
 import {ModalConfig} from '../shared/modal/modal.config';
 import {AlertConfig} from '../shared/alert/alert.config';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {IEnigma} from '../../interfaces/enigma.interface';
 import {EnigmaService} from '../../services/enigma.service';
-import {AnswerService} from '../../services/answer.service';
-import {HintService} from '../../services/hint.service';
-import {PropositionService} from '../../services/proposition.service';
+import {GeoGroupService} from '../../services/geoGroup.service';
+import {IGeoGroup} from '../../interfaces/geoGroup.interface';
 
 @Component({
   selector: 'app-enigma',
@@ -21,6 +19,18 @@ export class EnigmaComponent implements OnInit {
   @ViewChild('successModal') private modalSuccessComponent: ModalSuccessComponent;
 
   enigmas: IEnigma[];
+  geoGroups: [{
+    _id: string;
+    name: string;
+    positionX: number;
+    positionY: number;
+    radius: number;
+    pictureUrl: string;
+    updatedAt?: Date;
+    createdAt?: Date;
+    __v?: number;
+    enigmas: IEnigma[];
+  }];
 
   // alert & modal
   dangerModalConfig = {} as ModalConfig;
@@ -31,6 +41,7 @@ export class EnigmaComponent implements OnInit {
 
 
   constructor(private enigmaService: EnigmaService,
+              private geoGroupService: GeoGroupService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -74,7 +85,21 @@ export class EnigmaComponent implements OnInit {
     this.dangerAlertConfig = undefined;
     this.enigmaService.getEnigmas().subscribe((res: IEnigma[]) => {
         this.enigmas = res;
-        this.loading = false;
+        this.enigmas.sort((a, b) => (a.geoGroupId > b.geoGroupId) ? 1 : ((b.geoGroupId > a.geoGroupId) ? -1 : 0));
+        this.geoGroupService.getGeoGroups().subscribe((res2: IGeoGroup[]) => {
+            // @ts-ignore
+            this.geoGroups = res2;
+            this.enigmas.sort((a, b) => (a.geoGroupId > b.geoGroupId) ? 1 : ((b.geoGroupId > a.geoGroupId) ? -1 : 0));
+            for (const g of this.geoGroups){
+              g.enigmas = [];
+              for (const e of this.enigmas){
+                if (e.geoGroupId === g._id){
+                  g.enigmas.push(e);
+                }
+              }
+            }
+            this.loading = false;
+          });
       },
       error => {
         this.loading = false;
