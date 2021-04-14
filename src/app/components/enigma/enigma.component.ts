@@ -97,6 +97,11 @@ export class EnigmaComponent implements OnInit {
                   g.enigmas.push(e);
                 }
               }
+              g.enigmas.sort((a: IEnigma, b: IEnigma) => {
+                if (a.order < b.order) { return -1; }
+                if (a.order > b.order) { return 1; }
+                return 0;
+              });
             }
             this.loading = false;
           });
