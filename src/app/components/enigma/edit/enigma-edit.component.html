@@ -48,7 +48,10 @@
 
             <!-- pictureUrl -->
             <div class="mb-3">
-              <label class="form-label" for="pictureUrl">Image</label>
+              <label class="form-label" for="pictureUrl">
+                <a *ngIf="pictureUrl.value !== ''" class="bi bi-image" href="{{pictureUrl.value}}" target="_blank"> Image</a>
+                <ng-container *ngIf="pictureUrl.value === ''">Image</ng-container>
+              </label>
               <input class="form-control" id="pictureUrl" type="text" name="pictureUrl" placeholder="https://"
                      formControlName="pictureUrl"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && pictureUrl.invalid }"/>
             </div>
