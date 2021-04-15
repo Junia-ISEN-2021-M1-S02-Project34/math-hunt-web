@@ -24,6 +24,9 @@ import { EnigmaComponent } from './components/enigma/enigma.component';
 import { EnigmaEditComponent } from './components/enigma/edit/enigma-edit.component';
 import { EnigmaNewComponent } from './components/enigma/new/enigma-new.component';
 import {SortablejsModule} from 'ngx-sortablejs';
+import { GameComponent } from './components/game/game.component';
+import { GameEditComponent } from './components/game/edit/game-edit.component';
+import { GameNewComponent } from './components/game/new/game-new.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import {SortablejsModule} from 'ngx-sortablejs';
     EnigmaComponent,
     EnigmaEditComponent,
     EnigmaNewComponent,
+    GameComponent,
+    GameEditComponent,
+    GameNewComponent,
   ],
   imports: [
     BrowserModule,
