@@ -1,0 +1,68 @@
+<!-- back button -->
+<button class="btn btn-primary bi bi-arrow-return-left mt-3 ms-3 shadow" (click)="onButtonBack()" type="button"> Retour à la liste des parties</button>
+
+<app-modal-danger #dangerModal [modalConfig]="dangerModalConfig"></app-modal-danger>
+<app-modal-success #successModal [modalConfig]="successModalConfig"></app-modal-success>
+<app-alert-danger *ngIf="dangerAlertConfig" [alertConfig]="dangerAlertConfig"></app-alert-danger>
+
+<ng-container *ngIf="loading && !dangerAlertConfig">
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;"></div>
+  </div>
+</ng-container>
+
+<div class="container mt-4" style="max-width: 40em" *ngIf="!loading">
+
+  <div class="card shadow">
+
+    <!-- header -->
+    <div class="card-header pt-3">
+      <div class="d-flex flex-row align-items-center">
+        <h4 class="bi bi-plus-circle me-2"></h4>
+        <h4 class="align-middle">Créer une partie</h4>
+      </div>
+    </div>
+
+    <!-- body -->
+    <div class="card-body">
+
+      <form [formGroup]="addGameForm" class="d-flex flex-column" novalidate="novalidate" (ngSubmit)="onSubmitAddForm()">
+
+        <!-- name -->
+        <div class="mb-3">
+          <label class="form-label" for="name">Nom</label>
+          <input class="form-control" id="name" type="text" name="name" placeholder="Nom partie" autocomplete="off" required="required"
+                 formControlName="name"  [ngClass]="{ 'is-invalid': submitted && name.invalid }"/>
+        </div>
+
+        <!-- duration -->
+        <div class="mb-3">
+          <label class="form-label" for="duration">Durée (en heure)</label>
+          <input class="form-control" id="duration" type="number" name="duration" placeholder="4h" autocomplete="off" required="required"
+                 formControlName="duration"  [ngClass]="{ 'is-invalid': submitted && duration.invalid }"/>
+        </div>
+
+        <!-- numberOfTeams -->
+        <div class="mb-3">
+          <label class="form-label" for="numberOfTeams">Nombre d'équipes à générer</label>
+          <input class="form-control" id="numberOfTeams" type="number" name="numberOfTeams" placeholder="3" autocomplete="off" required="required"
+                 formControlName="numberOfTeams"  [ngClass]="{ 'is-invalid': submitted && numberOfTeams.invalid }"/>
+        </div>
+
+        <!-- submit -->
+        <div class="d-flex flex-row justify-content-end">
+          <div class="mb-0 align-self-end me-3">
+            <button type="submit" class="btn btn-outline-danger bi bi-x"
+                    (click)="addGameForm.reset();"> Annuler</button>
+          </div>
+          <div class="mb-0 align-self-end">
+            <button type="submit" class="btn btn-primary bi bi-plus-circle"> Créer</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
