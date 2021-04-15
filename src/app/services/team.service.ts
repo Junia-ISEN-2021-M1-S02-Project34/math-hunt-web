@@ -13,8 +13,8 @@ export class TeamService {
 
   constructor(private http: HttpClient) { }
 
-  postTeam(team: ITeam): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/create/team`, team);
+  postTeams({gameId, gameName, numberOfTeams}): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/create/teams`, {gameId, gameName, numberOfTeams});
   }
 
   getTeams(): Observable<ITeam[]> {
