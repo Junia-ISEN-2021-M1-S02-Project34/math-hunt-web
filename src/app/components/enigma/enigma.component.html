@@ -37,6 +37,7 @@
             <tr>
               <th scope="col">Nom</th>
               <th scope="col">Rang</th>
+              <th scope="col">Active</th>
               <th scope="col">Action</th>
             </tr>
             </thead>
@@ -45,6 +46,8 @@
             <tr *ngFor="let e of g.enigmas">
               <td class="text-nowrap">{{e.name}}</td>
               <td class="text-nowrap">{{e.order}}</td>
+              <td class="text-nowrap" *ngIf="e.isActive">Oui</td>
+              <td class="text-nowrap" *ngIf="!e.isActive">Non</td>
               <td class="text-center">
                 <div class="d-flex flex-row justify-content-center">
                   <button type="button" class="btn btn btn-sm btn-outline-primary bi bi-pencil me-2" (click)="onButtonEdit(e)"> Modifier</button>
