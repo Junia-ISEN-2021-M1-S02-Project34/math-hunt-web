@@ -27,7 +27,6 @@ import {SortablejsModule} from 'ngx-sortablejs';
 import { GameComponent } from './components/game/game.component';
 import { GameNewComponent } from './components/game/new/game-new.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
-import {LeafletDrawModule} from '@asymmetrik/ngx-leaflet-draw';
 
 @NgModule({
   declarations: [
@@ -57,8 +56,7 @@ import {LeafletDrawModule} from '@asymmetrik/ngx-leaflet-draw';
     ReactiveFormsModule,
     HttpClientModule,
     SortablejsModule.forRoot({ animation: 150 }),
-    LeafletModule,
-    LeafletDrawModule,
+    LeafletModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

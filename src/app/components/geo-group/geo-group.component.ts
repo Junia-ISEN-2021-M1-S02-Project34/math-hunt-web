@@ -7,6 +7,7 @@ import {AlertConfig} from '../shared/alert/alert.config';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {GeoGroupService} from '../../services/geoGroup.service';
+import {circle, icon, latLng, marker, tileLayer} from 'leaflet';
 
 @Component({
   selector: 'app-geo-group',
@@ -36,6 +37,10 @@ export class GeoGroupComponent implements OnInit {
   pictureUrl: FormControl;
   submitted = false;
 
+  // map
+  layers = [];
+  options;
+
 
   constructor(private geoGroupService: GeoGroupService,
               private router: Router) { }
@@ -52,9 +57,9 @@ export class GeoGroupComponent implements OnInit {
 
   createFormControls(): void {
     this.name = new FormControl(null, Validators.required);
-    this.positionX = new FormControl(null, Validators.required);
-    this.positionY = new FormControl(null, Validators.required);
-    this.radius = new FormControl(null, Validators.required);
+    this.positionX = new FormControl(50.62925);
+    this.positionY = new FormControl(3.057256);
+    this.radius = new FormControl(100, Validators.required);
     this.pictureUrl = new FormControl(null, Validators.required);
   }
 
@@ -66,6 +71,25 @@ export class GeoGroupComponent implements OnInit {
       radius: this.radius,
       pictureUrl: this.pictureUrl
     });
+  }
+
+  initMap(): void{
+    this.options = {
+      layers: [
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' }),
+      ],
+      zoom: 15,
+      center: latLng(this.positionX.value, this.positionY.value)
+    };
+    this.layers[0] = marker([ this.positionX.value, this.positionY.value ], {
+      icon: icon({
+        iconSize: [ 25, 41 ],
+        iconAnchor: [ 13, 41 ],
+        iconUrl: 'assets/marker-icon.png',
+        shadowUrl: 'assets/marker-shadow.png'
+      })
+    });
+    this.layers[1] = circle([ this.positionX.value, this.positionY.value ], { radius: this.radius.value });
   }
 
 
@@ -103,6 +127,23 @@ export class GeoGroupComponent implements OnInit {
     });
   }
 
+  onMapMouseClick(event): void{
+    this.positionX.patchValue(event.latlng.lat);
+    this.positionY.patchValue(event.latlng.lng);
+    this.layers[0] = marker([ this.positionX.value, this.positionY.value ], {
+      icon: icon({
+        iconSize: [ 25, 41 ],
+        iconAnchor: [ 13, 41 ],
+        iconUrl: 'assets/marker-icon.png',
+        shadowUrl: 'assets/marker-shadow.png'
+      })
+    });
+    this.layers[1] = circle([ this.positionX.value, this.positionY.value ], { radius: this.radius.value });
+  }
+
+  onRadiusChange(): void {
+    this.layers[1] = circle([ this.positionX.value, this.positionY.value ], { radius: this.radius.value });
+  }
 
 
   /******************************************** */
@@ -115,6 +156,7 @@ export class GeoGroupComponent implements OnInit {
     this.geoGroupService.getGeoGroups().subscribe((res: IGeoGroup[]) => {
         this.geoGroups = res;
         this.loading = false;
+        this.initMap();
       },
       error => {
         this.loading = false;
