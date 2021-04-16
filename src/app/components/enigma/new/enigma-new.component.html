@@ -54,20 +54,13 @@
             </textarea>
           </div>
 
-          <div class="d-flex flex-row">
+          <div>
 
-            <!-- positionX -->
-            <div class="mb-3 w-50 me-4">
-              <label class="form-label" for="positionX">PosX</label>
-              <input class="form-control" id="positionX" type="number" name="positionX" placeholder="" autocomplete="off" required="required"
-                     formControlName="positionX"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && positionX.invalid }"/>
-            </div>
-
-            <!-- positionY -->
-            <div class="mb-3 w-50">
-              <label class="form-label" for="positionY">PosY</label>
-              <input class="form-control" id="positionY" type="number" name="positionY" placeholder="" autocomplete="off" required="required"
-                     formControlName="positionY"  [ngClass]="{ 'is-invalid': enigmaFormSubmitted && positionY.invalid }"/>
+            <div style="height: 300px;"
+                 leaflet
+                 [leafletOptions]="options"
+                 [leafletLayers]="layers"
+                 (leafletClick)="onMapMouseClick($event)">
             </div>
 
           </div>

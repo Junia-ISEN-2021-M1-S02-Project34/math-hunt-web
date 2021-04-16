@@ -17,6 +17,7 @@ import {PropositionService} from '../../../services/proposition.service';
 import {HintService} from '../../../services/hint.service';
 import {map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
+import {circle, icon, latLng, marker, tileLayer} from 'leaflet';
 
 @Component({
   selector: 'app-enigma-new',
@@ -70,6 +71,10 @@ export class EnigmaNewComponent implements OnInit {
   hints: FormArray;
   hintsFormSubmitted = false;
 
+  // map
+  layers = [];
+  options;
+
 
   constructor(private enigmaService: EnigmaService,
               private answerService: AnswerService,
@@ -95,8 +100,8 @@ export class EnigmaNewComponent implements OnInit {
     this.description = new FormControl(null, Validators.required);
     this.pictureUrl = new FormControl(null);
     this.question = new FormControl(null, Validators.required);
-    this.positionX = new FormControl(null, Validators.required);
-    this.positionY = new FormControl(null, Validators.required);
+    this.positionX = new FormControl(50.62925);
+    this.positionY = new FormControl(3.057256);
     this.scoreValue = new FormControl(null, Validators.required);
     this.geoGroupId = new FormControl('', Validators.required);
     this.order = new FormControl(null, Validators.required);
@@ -130,6 +135,7 @@ export class EnigmaNewComponent implements OnInit {
     this.hintsForm = new FormGroup({
       hints: this.hints,
     });
+    this.initMap();
   }
 
   get fPropositions(): { [p: string]: AbstractControl } { return this.answerForm.controls; }
@@ -137,6 +143,24 @@ export class EnigmaNewComponent implements OnInit {
 
   get fHints(): { [p: string]: AbstractControl } { return this.hintsForm.controls; }
   get tHints(): FormArray { return this.fHints.hints as FormArray; }
+
+  initMap(): void{
+    this.options = {
+      layers: [
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' }),
+      ],
+      zoom: 15,
+      center: latLng(this.positionX.value, this.positionY.value)
+    };
+    this.layers[0] = marker([ this.positionX.value, this.positionY.value ], {
+      icon: icon({
+        iconSize: [ 25, 41 ],
+        iconAnchor: [ 13, 41 ],
+        iconUrl: 'assets/marker-icon.png',
+        shadowUrl: 'assets/marker-shadow.png'
+      })
+    });
+  }
 
 
   /******************************************** */
@@ -209,6 +233,19 @@ export class EnigmaNewComponent implements OnInit {
     if (this.tHints.length > 0){
       this.tHints.removeAt(index);
     }
+  }
+
+  onMapMouseClick(event): void{
+    this.positionX.patchValue(event.latlng.lat);
+    this.positionY.patchValue(event.latlng.lng);
+    this.layers[0] = marker([ this.positionX.value, this.positionY.value ], {
+      icon: icon({
+        iconSize: [ 25, 41 ],
+        iconAnchor: [ 13, 41 ],
+        iconUrl: 'assets/marker-icon.png',
+        shadowUrl: 'assets/marker-shadow.png'
+      })
+    });
   }
 
 
