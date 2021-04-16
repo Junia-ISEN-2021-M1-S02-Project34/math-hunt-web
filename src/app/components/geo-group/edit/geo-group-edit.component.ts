@@ -48,6 +48,8 @@ export class GeoGroupEditComponent implements OnInit {
   // map
   layers = [];
   options;
+  center;
+  zoom = 15;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -77,9 +79,8 @@ export class GeoGroupEditComponent implements OnInit {
       layers: [
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' }),
       ],
-      zoom: 15,
-      center: latLng(this.geoGroup.positionX, this.geoGroup.positionY)
     };
+    this.center = latLng(this.geoGroup.positionX, this.geoGroup.positionY);
     this.layers[0] = marker([ this.geoGroup.positionX, this.geoGroup.positionY ], {
       icon: icon({
         iconSize: [ 25, 41 ],
@@ -149,6 +150,7 @@ export class GeoGroupEditComponent implements OnInit {
         shadowUrl: 'assets/marker-shadow.png'
       })
     });
+    this.center = latLng(this.geoGroup.positionX, this.geoGroup.positionY);
     this.layers[1] = circle([ this.geoGroup.positionX, this.geoGroup.positionY ], { radius: this.editGeoGroupForm.value.radius });
   }
 

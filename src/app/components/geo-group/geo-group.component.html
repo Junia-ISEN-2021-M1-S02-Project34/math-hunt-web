@@ -44,6 +44,8 @@
                  leaflet
                  [leafletOptions]="options"
                  [leafletLayers]="layers"
+                 [(leafletCenter)]="center"
+                 [(leafletZoom)]="zoom"
                  (leafletClick)="onMapMouseClick($event)">
             </div>
 

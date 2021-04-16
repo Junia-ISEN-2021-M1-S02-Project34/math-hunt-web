@@ -40,6 +40,8 @@ export class GeoGroupComponent implements OnInit {
   // map
   layers = [];
   options;
+  center;
+  zoom = 15;
 
 
   constructor(private geoGroupService: GeoGroupService,
@@ -77,10 +79,9 @@ export class GeoGroupComponent implements OnInit {
     this.options = {
       layers: [
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' }),
-      ],
-      zoom: 15,
-      center: latLng(this.positionX.value, this.positionY.value)
+      ]
     };
+    this.center = latLng(this.positionX.value, this.positionY.value);
     this.layers[0] = marker([ this.positionX.value, this.positionY.value ], {
       icon: icon({
         iconSize: [ 25, 41 ],
@@ -138,6 +139,7 @@ export class GeoGroupComponent implements OnInit {
         shadowUrl: 'assets/marker-shadow.png'
       })
     });
+    this.center = latLng(this.positionX.value, this.positionY.value);
     this.layers[1] = circle([ this.positionX.value, this.positionY.value ], { radius: this.radius.value });
   }
 
