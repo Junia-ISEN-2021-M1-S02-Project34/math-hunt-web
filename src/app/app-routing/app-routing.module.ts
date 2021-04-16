@@ -11,7 +11,6 @@ import {EnigmaEditComponent} from '../components/enigma/edit/enigma-edit.compone
 import {EnigmaNewComponent} from '../components/enigma/new/enigma-new.component';
 import {EnigmaComponent} from '../components/enigma/enigma.component';
 import {GameComponent} from '../components/game/game.component';
-import {GameEditComponent} from '../components/game/edit/game-edit.component';
 import {GameNewComponent} from '../components/game/new/game-new.component';
 //canActivate: [AuthGuard
 const routes: Routes = [
@@ -23,7 +22,7 @@ const routes: Routes = [
   {path: 'enigmas/edit', component: EnigmaEditComponent},
   {path: 'games', component: GameComponent},
   {path: 'games/new', component: GameNewComponent},
-  {path: 'games/edit', component: GameEditComponent},
+  {path: 'games/edit', component: GameNewComponent},
   {path: 'sign-in', component: SignInComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'not-found', component: FourOFourComponent},

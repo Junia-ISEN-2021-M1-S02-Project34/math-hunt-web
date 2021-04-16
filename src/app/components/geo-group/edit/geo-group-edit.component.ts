@@ -12,7 +12,7 @@ import {GeoGroupService} from '../../../services/geoGroup.service';
 import {SortableOptions} from 'sortablejs';
 import {map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
-import {IProposition} from '../../../interfaces/proposition.interface';
+import {circle, featureGroup, FeatureGroup, icon, latLng, Marker, marker, polygon, tileLayer} from 'leaflet';
 
 @Component({
   selector: 'app-geo-group-edit',
@@ -41,11 +41,13 @@ export class GeoGroupEditComponent implements OnInit {
   displayEditForm = false;
   editGeoGroupForm: FormGroup;
   name: FormControl;
-  positionX: FormControl;
-  positionY: FormControl;
   radius: FormControl;
   pictureUrl: FormControl;
   submitted = false;
+
+  // map
+  layers = [];
+  options;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -70,6 +72,25 @@ export class GeoGroupEditComponent implements OnInit {
     }
   }
 
+  initMap(): void{
+    this.options = {
+      layers: [
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' }),
+      ],
+      zoom: 15,
+      center: latLng(this.geoGroup.positionX, this.geoGroup.positionY)
+    };
+    this.layers[0] = marker([ this.geoGroup.positionX, this.geoGroup.positionY ], {
+      icon: icon({
+        iconSize: [ 25, 41 ],
+        iconAnchor: [ 13, 41 ],
+        iconUrl: 'assets/marker-icon.png',
+        shadowUrl: 'assets/marker-shadow.png'
+      })
+    });
+    this.layers[1] = circle([ this.geoGroup.positionX, this.geoGroup.positionY ], { radius: this.editGeoGroupForm.value.radius });
+  }
+
 
 
 
@@ -79,8 +100,6 @@ export class GeoGroupEditComponent implements OnInit {
 
   createFormControls(): void {
     this.name = new FormControl(null, Validators.required);
-    this.positionX = new FormControl(null, Validators.required);
-    this.positionY = new FormControl(null, Validators.required);
     this.radius = new FormControl(null, Validators.required);
     this.pictureUrl = new FormControl(null, Validators.required);
   }
@@ -88,8 +107,6 @@ export class GeoGroupEditComponent implements OnInit {
   createForms(): void {
     this.editGeoGroupForm = new FormGroup({
       name: this.name,
-      positionX: this.positionX,
-      positionY: this.positionY,
       radius: this.radius,
       pictureUrl: this.pictureUrl,
     });
@@ -121,6 +138,24 @@ export class GeoGroupEditComponent implements OnInit {
     this.router.navigate(['/enigmas/edit'], { queryParams: { enigma: enigma._id } });
   }
 
+  onMapMouseClick(event): void{
+    this.geoGroup.positionX = event.latlng.lat;
+    this.geoGroup.positionY = event.latlng.lng;
+    this.layers[0] = marker([ this.geoGroup.positionX, this.geoGroup.positionY ], {
+      icon: icon({
+        iconSize: [ 25, 41 ],
+        iconAnchor: [ 13, 41 ],
+        iconUrl: 'assets/marker-icon.png',
+        shadowUrl: 'assets/marker-shadow.png'
+      })
+    });
+    this.layers[1] = circle([ this.geoGroup.positionX, this.geoGroup.positionY ], { radius: this.editGeoGroupForm.value.radius });
+  }
+
+  onRadiusChange(): void {
+    this.layers[1] = circle([ this.geoGroup.positionX, this.geoGroup.positionY ], { radius: this.editGeoGroupForm.value.radius });
+  }
+
   /******************************************** */
   /************    Data fetcher     *************/
   /******************************************** */
@@ -147,6 +182,7 @@ export class GeoGroupEditComponent implements OnInit {
     this.geoGroupService.getGeoGroupById(this.geoGroup).subscribe((res: IGeoGroup) => {
         this.geoGroup = res;
         this.editGeoGroupForm.patchValue(this.geoGroup);
+        this.initMap();
         this.loading = false;
       },
       error => {
@@ -169,11 +205,13 @@ export class GeoGroupEditComponent implements OnInit {
   editGeoGroup(): void{
     const toEdit = this.editGeoGroupForm.value as IGeoGroup;
     toEdit._id = this.geoGroup._id;
+    toEdit.positionX = this.geoGroup.positionX;
+    toEdit.positionY = this.geoGroup.positionY;
     this.geoGroupService.putGeoGroup(toEdit).subscribe(async () => {
         this.successModalConfig.modalText = 'GeoGroup modifiée avec succès !';
         this.successModalConfig.closeAfterXSeconds = 3;
         this.editGeoGroupForm.reset();
-        this.displayEditForm = false;
+        this.displayEditForm = true;
         this.fetchInfos();
         await this.modalSuccessComponent.open();
       },

@@ -25,8 +25,9 @@ import { EnigmaEditComponent } from './components/enigma/edit/enigma-edit.compon
 import { EnigmaNewComponent } from './components/enigma/new/enigma-new.component';
 import {SortablejsModule} from 'ngx-sortablejs';
 import { GameComponent } from './components/game/game.component';
-import { GameEditComponent } from './components/game/edit/game-edit.component';
 import { GameNewComponent } from './components/game/new/game-new.component';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {LeafletDrawModule} from '@asymmetrik/ngx-leaflet-draw';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,6 @@ import { GameNewComponent } from './components/game/new/game-new.component';
     EnigmaEditComponent,
     EnigmaNewComponent,
     GameComponent,
-    GameEditComponent,
     GameNewComponent,
   ],
   imports: [
@@ -57,6 +57,8 @@ import { GameNewComponent } from './components/game/new/game-new.component';
     ReactiveFormsModule,
     HttpClientModule,
     SortablejsModule.forRoot({ animation: 150 }),
+    LeafletModule,
+    LeafletDrawModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
