@@ -74,6 +74,8 @@ export class EnigmaNewComponent implements OnInit {
   // map
   layers = [];
   options;
+  center;
+  zoom = 15;
 
 
   constructor(private enigmaService: EnigmaService,
@@ -148,10 +150,9 @@ export class EnigmaNewComponent implements OnInit {
     this.options = {
       layers: [
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, attribution: '...' }),
-      ],
-      zoom: 15,
-      center: latLng(this.positionX.value, this.positionY.value)
+      ]
     };
+    this.center = latLng(this.positionX.value, this.positionY.value);
     this.layers[0] = marker([ this.positionX.value, this.positionY.value ], {
       icon: icon({
         iconSize: [ 25, 41 ],
@@ -246,6 +247,7 @@ export class EnigmaNewComponent implements OnInit {
         shadowUrl: 'assets/marker-shadow.png'
       })
     });
+    this.center = latLng(this.positionX.value, this.positionY.value);
   }
 
 
