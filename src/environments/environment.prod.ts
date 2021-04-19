@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiHostname: 'https://math-hunt-api.herokuapp.com/api',
 };
