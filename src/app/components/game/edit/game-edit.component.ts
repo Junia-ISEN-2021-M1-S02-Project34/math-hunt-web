@@ -23,21 +23,12 @@ export class GameEditComponent implements OnInit {
   game = {} as IGame;
   teams: ITeam[];
 
-  sortOptions: SortableOptions = {
-  };
-
   // alert & modal
   dangerModalConfig = {} as ModalConfig;
   successModalConfig = {} as ModalConfig;
   dangerAlertConfig: AlertConfig;
 
   loading: boolean;
-  loadingInTab: boolean;
-
-  // form
-  displayEditForm = false;
-  editGameForm: FormGroup;
-  submitted = false;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -49,45 +40,16 @@ export class GameEditComponent implements OnInit {
       this.game._id = this.route.snapshot.queryParams.game;
       this.fetchInfos();
       this.refreshData();
-      this.createFormControls();
-      this.createForms();
     }
     else {
       this.router.navigate(['/games']);
     }
   }
 
-  /******************************************** */
-  /************      Forms          *************/
-  /******************************************** */
-
-  createFormControls(): void {
-    // this.name = new FormControl(null, Validators.required);
-  }
-
-  createForms(): void {
-    this.editGameForm = new FormGroup({
-      // name: this.name,
-    });
-  }
-
-
-
-
 
   /******************************************** */
   /************   Buttons Actions   *************/
   /******************************************** */
-
-  onSubmitEditForm(): void{
-    this.submitted = true;
-    this.dangerAlertConfig = undefined;
-    if (this.editGameForm.valid) {
-      this.editGame();
-      this.editGameForm.reset();
-      this.submitted = false;
-    }
-  }
 
   onButtonBack(): void {
     this.router.navigate(['/games']);
@@ -128,14 +90,14 @@ export class GameEditComponent implements OnInit {
   /******************************************** */
 
   refreshData(): void{
-    this.loadingInTab = true;
+    this.loading = true;
     this.dangerAlertConfig = undefined;
     this.teamService.getTeamByGameId(this.game).subscribe((res: ITeam[]) => {
         this.teams = res;
-        this.loadingInTab = false;
+        this.loading = false;
       },
       error => {
-        this.loadingInTab = false;
+        this.loading = false;
         this.dangerAlertConfig = {} as AlertConfig;
         this.dangerAlertConfig.alertTitle = 'Erreur lors de la récupération des équipes.';
         this.dangerAlertConfig.alertText = 'La récupération des équipes a échoué. Le serveur a renvoyé une erreur. Veuillez rafraichir la page.';
@@ -148,7 +110,6 @@ export class GameEditComponent implements OnInit {
     this.loading = true;
     this.gameService.getGameById(this.game).subscribe((res: IGame) => {
         this.game = res;
-        this.editGameForm.patchValue(this.game);
         this.loading = false;
       },
       error => {
@@ -199,27 +160,6 @@ export class GameEditComponent implements OnInit {
         this.dangerAlertConfig.alertError = error;
         this.dangerAlertConfig.dismissButton = true;
       });
-  }
-
-  editGame(): void{
-    /* const toEdit = this.editGeoGroupForm.value as IGeoGroup;
-    toEdit._id = this.geoGroup._id;
-    toEdit.positionX = this.geoGroup.positionX;
-    toEdit.positionY = this.geoGroup.positionY;
-    this.geoGroupService.putGeoGroup(toEdit).subscribe(async () => {
-        this.successModalConfig.modalText = 'GeoGroup modifiée avec succès !';
-        this.successModalConfig.closeAfterXSeconds = 3;
-        this.editGeoGroupForm.reset();
-        this.displayEditForm = true;
-        this.fetchInfos();
-        await this.modalSuccessComponent.open();
-      },
-      error => {
-        this.dangerAlertConfig = {} as AlertConfig;
-        this.dangerAlertConfig.alertTitle = 'Erreur lors de la modification du GeoGroup';
-        this.dangerAlertConfig.alertError = error.message;
-        this.dangerAlertConfig.dismissButton = true;
-      });*/
   }
 
 
