@@ -46,7 +46,7 @@
             </thead>
             <!-- table body -->
             <tbody>
-            <tr *ngFor="let e of g.enigmasProgression" [class.text-success]="e.done">
+            <tr *ngFor="let e of g.enigmasProgression" [class.text-success]="e.done && e.score > 0" [class.text-danger]="e.done && e.score == 0">
               <td class="text-nowrap">{{e.enigmaName}}</td>
               <td class="text-nowrap">{{e.score}}/{{e.scoreValue}}</td>
               <td class="text-nowrap bi bi-check2-circle" *ngIf="e.done"></td>
