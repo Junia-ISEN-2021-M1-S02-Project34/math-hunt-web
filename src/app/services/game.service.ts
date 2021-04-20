@@ -36,4 +36,8 @@ export class GameService {
   deleteGame(game: IGame): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/delete/game/${game._id}`);
   }
+
+  startGame(game: IGame): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/start/game/${game._id}`, game);
+  }
 }

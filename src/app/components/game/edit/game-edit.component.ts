@@ -110,6 +110,19 @@ export class GameEditComponent implements OnInit {
     this.router.navigate(['/team'], { queryParams: { team: team._id } });
   }
 
+  async onButtonStart(): Promise<void> {
+    this.dangerAlertConfig = undefined;
+    this.dangerModalConfig.modalTitle = 'Confirmer le lancement ?';
+    this.dangerModalConfig.modalText = 'Voulez-vous vraiment débuter la partie ?';
+    this.dangerModalConfig.actionButtonLabel = 'Oui';
+    this.dangerModalConfig.dismissButtonLabel = 'Annuler';
+    await this.modalDangerComponent.open().then((r) => {
+      if (r === 'Oui') {
+        this.startGame();
+      }
+    });
+  }
+
   /******************************************** */
   /************    Data fetcher     *************/
   /******************************************** */
@@ -143,6 +156,23 @@ export class GameEditComponent implements OnInit {
         this.dangerAlertConfig = {} as AlertConfig;
         this.dangerAlertConfig.alertTitle = 'Erreur lors de la récupération des infos de la partie.';
         this.dangerAlertConfig.alertText = 'La récupération de la partie a échoué. Le serveur a renvoyé une erreur. Veuillez rafraichir la page.';
+        this.dangerAlertConfig.alertError = error.message;
+        this.dangerAlertConfig.refreshButton = true;
+      });
+  }
+
+  startGame(): void{
+    this.loading = true;
+    this.gameService.startGame(this.game).subscribe(() => {
+        this.loading = false;
+        this.fetchInfos();
+        this.refreshData();
+      },
+      error => {
+        this.loading = false;
+        this.dangerAlertConfig = {} as AlertConfig;
+        this.dangerAlertConfig.alertTitle = 'Erreur lors du lancement de la partie.';
+        this.dangerAlertConfig.alertText = 'Le lancement de la partie a échoué. Le serveur a renvoyé une erreur. Veuillez rafraichir la page.';
         this.dangerAlertConfig.alertError = error.message;
         this.dangerAlertConfig.refreshButton = true;
       });
