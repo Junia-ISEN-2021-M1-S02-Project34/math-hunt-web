@@ -46,6 +46,10 @@ export class GameComponent implements OnInit {
     this.router.navigate(['/games/new']);
   }
 
+  onButtonLeaderboard(game): void{
+    this.router.navigate(['/games/leaderboard'], { queryParams: { game: game._id } });
+  }
+
   async onButtonDelete(game): Promise<void> {
     this.dangerAlertConfig = undefined;
     this.dangerModalConfig.modalTitle = 'Confirmer la supression ?';
