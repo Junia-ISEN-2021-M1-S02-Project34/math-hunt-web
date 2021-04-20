@@ -106,6 +106,10 @@ export class GameEditComponent implements OnInit {
     });
   }
 
+  onButtonSeeTeam(team): void {
+    this.router.navigate(['/team'], { queryParams: { team: team._id } });
+  }
+
   /******************************************** */
   /************    Data fetcher     *************/
   /******************************************** */
