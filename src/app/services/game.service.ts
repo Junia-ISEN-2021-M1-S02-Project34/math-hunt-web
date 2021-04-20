@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {IGame} from '../interfaces/game.interface';
+import {ITeam} from '../interfaces/team.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,12 @@ export class GameService {
   getGameById(game: IGame): Observable<IGame> {
     return this.http.get<any>(`${this.apiUrl}/get/game/${game._id}`).pipe(
       map(res => res)
+    );
+  }
+
+  getRanking(game: IGame): Observable<ITeam[]> {
+    return this.http.get<any>(`${this.apiUrl}/get/teams/ranking/game/${game._id}`).pipe(
+      map(res => res.teams)
     );
   }
 
