@@ -27,6 +27,8 @@ import {SortablejsModule} from 'ngx-sortablejs';
 import { GameComponent } from './components/game/game.component';
 import { GameNewComponent } from './components/game/new/game-new.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import { GameEditComponent } from './components/game/edit/game-edit.component';
+import { TeamComponent } from './components/team/team.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
     EnigmaNewComponent,
     GameComponent,
     GameNewComponent,
+    GameEditComponent,
+    TeamComponent,
   ],
   imports: [
     BrowserModule,

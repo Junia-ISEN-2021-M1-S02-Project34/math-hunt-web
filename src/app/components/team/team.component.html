@@ -1,0 +1,69 @@
+<!-- back button -->
+<button class="btn btn-primary bi bi-arrow-return-left mt-3 ms-3 shadow" (click)="onButtonBack()" type="button"> Retour à la liste des parties</button>
+
+
+<app-modal-danger #dangerModal [modalConfig]="dangerModalConfig"></app-modal-danger>
+<app-modal-success #successModal [modalConfig]="successModalConfig"></app-modal-success>
+<app-alert-danger *ngIf="dangerAlertConfig" [alertConfig]="dangerAlertConfig"></app-alert-danger>
+
+<ng-container *ngIf="loading && !dangerAlertConfig">
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;"></div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!loading">
+
+  <!-- block list enigma -->
+  <div class="container mt-4" *ngFor="let g of team.progression">
+
+    <div class="card shadow">
+
+      <!-- header -->
+      <div class="card-header pt-3 text-primary">
+        <div class="d-flex flex-row align-items-center">
+          <h4 class="bi bi-list me-2"></h4>
+          <h4 class="align-middle">{{g.geoGroupName}}</h4>
+          <h4 class="align-middle ms-auto">{{g.geoGroupScore}}/{{g.geoGroupScoreValue}}</h4>
+        </div>
+      </div>
+
+      <!-- body -->
+      <div class="card-body p-0">
+
+        <div class="table-responsive">
+
+          <table class="table table-striped text-center align-middle mb-0">
+            <!-- table head -->
+            <thead>
+            <tr>
+              <th scope="col">Enigme</th>
+              <th scope="col">Score</th>
+              <th scope="col">État</th>
+              <th scope="col">Nombre d'indices utilisés</th>
+              <th scope="col">Nombre d'essais</th>
+            </tr>
+            </thead>
+            <!-- table body -->
+            <tbody>
+            <tr *ngFor="let e of g.enigmasProgression" [class.text-success]="e.done">
+              <td class="text-nowrap">{{e.enigmaName}}</td>
+              <td class="text-nowrap">{{e.score}}/{{e.scoreValue}}</td>
+              <td class="text-nowrap bi bi-check2-circle" *ngIf="e.done"></td>
+              <td class="text-nowrap bi bi-x-circle" *ngIf="!e.done"></td>
+              <td class="text-nowrap" *ngIf="e.usedHintsIds">{{e.usedHintsIds.length}}</td>
+              <td class="text-nowrap" *ngIf="!e.usedHintsIds">0</td>
+              <td class="text-nowrap">{{e.attemptsNumber}}</td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</ng-container>
+
