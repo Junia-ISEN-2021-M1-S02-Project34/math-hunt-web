@@ -12,7 +12,7 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="!loading">
+<div class="pb-4" *ngIf="!loading">
 
   <!-- block list enigma -->
   <div class="container mt-4" *ngFor="let g of team.progression">
@@ -22,7 +22,7 @@
       <!-- header -->
       <div class="card-header pt-3 text-primary">
         <div class="d-flex flex-row align-items-center">
-          <h4 class="bi bi-list me-2"></h4>
+          <h4 class="bi bi-compass me-2"></h4>
           <h4 class="align-middle">{{g.geoGroupName}}</h4>
           <h4 class="align-middle ms-auto">{{g.geoGroupScore}}/{{g.geoGroupScoreValue}}</h4>
         </div>
@@ -65,5 +65,5 @@
     </div>
   </div>
 
-</ng-container>
+</div>
 
