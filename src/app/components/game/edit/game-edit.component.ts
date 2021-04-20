@@ -85,6 +85,22 @@ export class GameEditComponent implements OnInit {
     });
   }
 
+  onButtonAddTeam(): void {
+    this.loading = true;
+    this.dangerAlertConfig = undefined;
+    this.teamService.postTeams({gameId: this.game._id, gameName: this.game.name, numberOfTeams: 1}).subscribe(() => {
+        this.refreshData();
+      },
+      error => {
+        this.loading = false;
+        this.dangerAlertConfig = {} as AlertConfig;
+        this.dangerAlertConfig.alertTitle = 'Erreur lors de l\'ajout d\'une équipe.';
+        this.dangerAlertConfig.alertText = 'L\'ajout de l\'équipes a échoué. Le serveur a renvoyé une erreur. Veuillez ressayer.';
+        this.dangerAlertConfig.alertError = error.message;
+        this.dangerAlertConfig.dismissButton = true;
+      });
+  }
+
   /******************************************** */
   /************    Data fetcher     *************/
   /******************************************** */
