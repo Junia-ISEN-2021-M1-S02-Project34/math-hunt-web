@@ -29,6 +29,7 @@ import { GameNewComponent } from './components/game/new/game-new.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import { GameEditComponent } from './components/game/edit/game-edit.component';
 import { TeamComponent } from './components/team/team.component';
+import { LeaderboardComponent } from './components/game/leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { TeamComponent } from './components/team/team.component';
     GameNewComponent,
     GameEditComponent,
     TeamComponent,
+    LeaderboardComponent,
   ],
   imports: [
     BrowserModule,

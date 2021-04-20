@@ -14,6 +14,7 @@ import {GameComponent} from '../components/game/game.component';
 import {GameNewComponent} from '../components/game/new/game-new.component';
 import {GameEditComponent} from '../components/game/edit/game-edit.component';
 import {TeamComponent} from '../components/team/team.component';
+import {LeaderboardComponent} from '../components/game/leaderboard/leaderboard.component';
 //canActivate: [AuthGuard
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: HomeComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'games', component: GameComponent},
   {path: 'games/new', component: GameNewComponent},
   {path: 'games/edit', component: GameEditComponent},
+  {path: 'games/leaderboard', component: LeaderboardComponent},
   {path: 'team', component: TeamComponent},
   {path: 'sign-in', component: SignInComponent},
   {path: 'sign-up', component: SignUpComponent},

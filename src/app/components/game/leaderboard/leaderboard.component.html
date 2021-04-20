@@ -15,16 +15,15 @@
 <div class="pb-4" *ngIf="!loading">
 
   <!-- block list enigma -->
-  <div class="container mt-4" *ngFor="let g of team.progression">
+  <div class="container mt-4">
 
     <div class="card shadow">
 
       <!-- header -->
       <div class="card-header pt-3 text-primary">
         <div class="d-flex flex-row align-items-center">
-          <h4 class="bi bi-compass me-2"></h4>
-          <h4 class="align-middle">{{g.geoGroupName}}</h4>
-          <h4 class="align-middle ms-auto">{{g.geoGroupScore}}/{{g.geoGroupScoreValue}}</h4>
+          <h4 class="bi bi-controller me-2"></h4>
+          <h4 class="align-middle">{{game.name}}</h4>
         </div>
       </div>
 
@@ -37,23 +36,17 @@
             <!-- table head -->
             <thead>
             <tr>
-              <th scope="col">Enigme</th>
+              <th scope="col">Équipe</th>
               <th scope="col">Score</th>
-              <th scope="col">État</th>
-              <th scope="col">Nombre d'indices utilisés</th>
-              <th scope="col">Nombre d'essais</th>
+              <th scope="col">Action</th>
             </tr>
             </thead>
             <!-- table body -->
             <tbody>
-            <tr *ngFor="let e of g.enigmasProgression" [class.text-success]="e.done && e.score > 0" [class.text-danger]="e.done && e.score == 0">
-              <td class="text-nowrap">{{e.enigmaName}}</td>
-              <td class="text-nowrap">{{e.score}}/{{e.scoreValue}}</td>
-              <td class="text-nowrap bi bi-check2-circle" *ngIf="e.done"></td>
-              <td class="text-nowrap bi bi-x-circle" *ngIf="!e.done"></td>
-              <td class="text-nowrap" *ngIf="e.usedHintsIds">{{e.usedHintsIds.length}}</td>
-              <td class="text-nowrap" *ngIf="!e.usedHintsIds">0</td>
-              <td class="text-nowrap">{{e.attemptsNumber}}</td>
+            <tr *ngFor="let t of teams">
+              <td class="text-nowrap">{{t.username}}</td>
+              <td class="text-nowrap">{{t.score}}</td>
+              <td class="text-nowrap"><button type="button" class="btn btn-sm btn-success bi bi-ui-checks" (click)="onButtonSeeTeam(t)"> Voir progression</button></td>
             </tr>
             </tbody>
           </table>

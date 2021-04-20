@@ -1,5 +1,9 @@
 <!-- back button -->
-<button class="btn btn-primary bi bi-arrow-return-left mt-3 ms-3 shadow" (click)="onButtonBack()" type="button"> Retour à la liste des parties</button>
+<div class="d-flex flex-row">
+  <button class="btn btn-primary bi bi-arrow-return-left mt-3 ms-3 shadow" (click)="onButtonBack()" type="button"> Retour à la liste des parties</button>
+  <button *ngIf="!game.isStarted" class="btn btn-success bi bi-controller mt-3 ms-3 shadow" (click)="onButtonStart()" type="button"> Commencer la partie</button>
+</div>
+
 
 
 <app-modal-danger #dangerModal [modalConfig]="dangerModalConfig"></app-modal-danger>
@@ -22,8 +26,16 @@
       <!-- header -->
       <div class="card-header pt-3 text-primary">
         <div class="d-flex flex-row align-items-center">
-          <h4 class="bi bi-list me-2"></h4>
+          <h4 class="bi bi-people me-2"></h4>
           <h4 class="align-middle">Équipes</h4>
+        </div>
+        <div class="d-flex flex-row align-items-center text-success" *ngIf="game.isStarted">
+          <h4 class="bi bi-controller me-2"></h4>
+          <h4 class="align-middle">Partie commencée</h4>
+        </div>
+        <div class="d-flex flex-row align-items-center text-danger" *ngIf="!game.isStarted">
+          <h4 class="bi bi-controller me-2"></h4>
+          <h4 class="align-middle">Partie non débutée</h4>
         </div>
       </div>
 

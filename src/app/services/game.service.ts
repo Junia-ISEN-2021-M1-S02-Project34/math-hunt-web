@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {IGame} from '../interfaces/game.interface';
+import {ITeam} from '../interfaces/team.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +30,21 @@ export class GameService {
     );
   }
 
+  getRanking(game: IGame): Observable<ITeam[]> {
+    return this.http.get<any>(`${this.apiUrl}/get/teams/ranking/game/${game._id}`).pipe(
+      map(res => res.teams)
+    );
+  }
+
   putGame(game: IGame): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/update/game/${game._id}`, game);
   }
 
   deleteGame(game: IGame): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/delete/game/${game._id}`);
+  }
+
+  startGame(game: IGame): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/start/game/${game._id}`, game);
   }
 }

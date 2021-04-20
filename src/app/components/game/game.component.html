@@ -46,7 +46,8 @@
               <td class="text-center">
                 <div class="d-flex flex-row justify-content-center">
                   <button type="button" class="btn btn btn-sm btn-outline-primary bi bi-pencil me-2" (click)="onButtonEdit(g)"> Modifier</button>
-                  <button type="button" class="btn btn-sm btn-outline-danger bi bi-trash" (click)="onButtonDelete(g)"> Supprimer</button>
+                  <button type="button" class="btn btn btn-sm btn-success bi bi-bar-chart me-2" (click)="onButtonLeaderboard(g)" *ngIf="g.isStarted"> Leaderboard</button>
+                  <button type="button" class="btn btn-sm btn-outline-danger bi bi-trash" (click)="onButtonDelete(g)" *ngIf="!g.isStarted"> Supprimer</button>
                 </div>
               </td>
             </tr>
