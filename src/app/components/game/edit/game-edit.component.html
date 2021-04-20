@@ -1,6 +1,7 @@
 <!-- back button -->
 <div class="d-flex flex-row">
   <button class="btn btn-primary bi bi-arrow-return-left mt-3 ms-3 shadow" (click)="onButtonBack()" type="button"> Retour à la liste des parties</button>
+  <button *ngIf="!game.isStarted" class="btn btn-warning bi bi-people mt-3 ms-3 shadow" (click)="onButtonAddTeam()" type="button"> Ajouter une nouvelle équipe</button>
   <button *ngIf="!game.isStarted" class="btn btn-success bi bi-controller mt-3 ms-3 shadow" (click)="onButtonStart()" type="button"> Commencer la partie</button>
 </div>
 
