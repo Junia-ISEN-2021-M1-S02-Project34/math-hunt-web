@@ -12,17 +12,22 @@ import {EnigmaNewComponent} from '../components/enigma/new/enigma-new.component'
 import {EnigmaComponent} from '../components/enigma/enigma.component';
 import {GameComponent} from '../components/game/game.component';
 import {GameNewComponent} from '../components/game/new/game-new.component';
-//canActivate: [AuthGuard
+import {GameEditComponent} from '../components/game/edit/game-edit.component';
+import {TeamComponent} from '../components/team/team.component';
+import {LeaderboardComponent} from '../components/game/leaderboard/leaderboard.component';
+
 const routes: Routes = [
-  {path: '', pathMatch: 'full', component: HomeComponent},
-  {path: 'geoGroups', component: GeoGroupComponent},
-  {path: 'geoGroups/edit', component: GeoGroupEditComponent},
-  {path: 'enigmas', component: EnigmaComponent},
-  {path: 'enigmas/new', component: EnigmaNewComponent},
-  {path: 'enigmas/edit', component: EnigmaEditComponent},
-  {path: 'games', component: GameComponent},
-  {path: 'games/new', component: GameNewComponent},
-  {path: 'games/edit', component: GameNewComponent},
+  {path: '', pathMatch: 'full', canActivate: [AuthGuard], component: HomeComponent},
+  {path: 'geoGroups', canActivate: [AuthGuard], component: GeoGroupComponent},
+  {path: 'geoGroups/edit', canActivate: [AuthGuard], component: GeoGroupEditComponent},
+  {path: 'enigmas', canActivate: [AuthGuard], component: EnigmaComponent},
+  {path: 'enigmas/new', canActivate: [AuthGuard], component: EnigmaNewComponent},
+  {path: 'enigmas/edit', canActivate: [AuthGuard], component: EnigmaEditComponent},
+  {path: 'games', canActivate: [AuthGuard], component: GameComponent},
+  {path: 'games/new', canActivate: [AuthGuard], component: GameNewComponent},
+  {path: 'games/edit', canActivate: [AuthGuard], component: GameEditComponent},
+  {path: 'games/leaderboard', canActivate: [AuthGuard], component: LeaderboardComponent},
+  {path: 'team', canActivate: [AuthGuard], component: TeamComponent},
   {path: 'sign-in', component: SignInComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'not-found', component: FourOFourComponent},

@@ -38,14 +38,14 @@
         <!-- duration -->
         <div class="mb-3">
           <label class="form-label" for="duration">Durée (en heure)</label>
-          <input class="form-control" id="duration" type="number" name="duration" placeholder="4h" autocomplete="off" required="required"
+          <input class="form-control" id="duration" type="number" name="duration" autocomplete="off" required="required"
                  formControlName="duration"  [ngClass]="{ 'is-invalid': submitted && duration.invalid }"/>
         </div>
 
         <!-- numberOfTeams -->
         <div class="mb-3">
           <label class="form-label" for="numberOfTeams">Nombre d'équipes à générer</label>
-          <input class="form-control" id="numberOfTeams" type="number" name="numberOfTeams" placeholder="3" autocomplete="off" required="required"
+          <input class="form-control" id="numberOfTeams" type="number" name="numberOfTeams" autocomplete="off" required="required"
                  formControlName="numberOfTeams"  [ngClass]="{ 'is-invalid': submitted && numberOfTeams.invalid }"/>
         </div>
 

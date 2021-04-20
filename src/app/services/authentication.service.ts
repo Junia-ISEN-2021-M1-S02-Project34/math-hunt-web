@@ -10,7 +10,7 @@ import {JwtUser} from '../interfaces/jwt-user.interface';
 })
 export class AuthenticationService {
   @Output() getLoggedState: EventEmitter<boolean> = new EventEmitter();
-  private apiUrl = `${environment.apiHostname}/authentication`;
+  private apiUrl = `${environment.apiHostname}/auth`;
 
   // user auth
   private currentUserSubject: BehaviorSubject<JwtUser>;
@@ -27,7 +27,7 @@ export class AuthenticationService {
 
   // signIn API with username and password
   signIn(username: string, password: string): Observable<unknown>{
-    return this.http.post<any>(`${this.apiUrl}/auth/sign_in`, { username, password })
+    return this.http.post<any>(`${this.apiUrl}/sign-in/admin`, { username, password })
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));

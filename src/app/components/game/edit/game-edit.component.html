@@ -1,0 +1,81 @@
+<!-- back button -->
+<div class="d-flex flex-row">
+  <button class="btn btn-primary bi bi-arrow-return-left mt-3 ms-3 shadow" (click)="onButtonBack()" type="button"> Retour à la liste des parties</button>
+  <button *ngIf="!game.isStarted" class="btn btn-warning bi bi-people mt-3 ms-3 shadow" (click)="onButtonAddTeam()" type="button"> Ajouter une nouvelle équipe</button>
+  <button *ngIf="!game.isStarted" class="btn btn-success bi bi-controller mt-3 ms-3 shadow" (click)="onButtonStart()" type="button"> Commencer la partie</button>
+</div>
+
+
+
+<app-modal-danger #dangerModal [modalConfig]="dangerModalConfig"></app-modal-danger>
+<app-modal-success #successModal [modalConfig]="successModalConfig"></app-modal-success>
+<app-alert-danger *ngIf="dangerAlertConfig" [alertConfig]="dangerAlertConfig"></app-alert-danger>
+
+<ng-container *ngIf="loading && !dangerAlertConfig">
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;"></div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!loading">
+
+  <!-- block list enigma -->
+  <div class="container mt-4">
+
+    <div class="card shadow">
+
+      <!-- header -->
+      <div class="card-header pt-3 text-primary">
+        <div class="d-flex flex-row align-items-center">
+          <h4 class="bi bi-people me-2"></h4>
+          <h4 class="align-middle">Équipes</h4>
+        </div>
+        <div class="d-flex flex-row align-items-center text-success" *ngIf="game.isStarted">
+          <h4 class="bi bi-controller me-2"></h4>
+          <h4 class="align-middle">Partie commencée</h4>
+        </div>
+        <div class="d-flex flex-row align-items-center text-danger" *ngIf="!game.isStarted">
+          <h4 class="bi bi-controller me-2"></h4>
+          <h4 class="align-middle">Partie non débutée</h4>
+        </div>
+      </div>
+
+      <!-- body -->
+      <div class="card-body p-0">
+
+        <div class="table-responsive">
+
+          <table class="table table-striped text-center align-middle mb-0">
+            <!-- table head -->
+            <thead>
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Mot de passe</th>
+              <th scope="col">Score</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <!-- table body -->
+            <tbody>
+            <tr *ngFor="let t of teams">
+              <td class="text-nowrap font-monospace">{{t.username}}</td>
+              <td class="text-nowrap font-monospace">{{t.password}}</td>
+              <td class="text-nowrap">{{t.score}}</td>
+              <td class="text-center">
+                <div class="d-flex flex-row justify-content-center">
+                  <button type="button" class="btn btn-sm btn-success bi bi-ui-checks" (click)="onButtonSeeTeam(t)"> Voir progression</button>
+                  <button type="button" class="ms-2 btn btn-sm btn-outline-danger bi bi-x" (click)="onButtonDeleteTeam(t)"> Supprimer</button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</ng-container>
