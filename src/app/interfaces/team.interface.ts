@@ -8,6 +8,7 @@ export interface ITeam {
   currentEnigmaId: string;
   currentGeoGroupId: string;
   isConnected: boolean;
+  gameFinished: boolean;
   updatedAt?: Date;
   createdAt?: Date;
   __v?: number;

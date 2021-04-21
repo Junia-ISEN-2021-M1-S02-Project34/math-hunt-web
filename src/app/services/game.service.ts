@@ -47,4 +47,8 @@ export class GameService {
   startGame(game: IGame): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/start/game/${game._id}`, game);
   }
+
+  stopGame(game: IGame): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/stop/game/${game._id}`, game);
+  }
 }
