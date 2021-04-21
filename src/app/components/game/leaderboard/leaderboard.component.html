@@ -38,6 +38,7 @@
             <tr>
               <th scope="col">Équipe</th>
               <th scope="col">Score</th>
+              <th scope="col">Partie terminée</th>
               <th scope="col">Action</th>
             </tr>
             </thead>
@@ -46,6 +47,8 @@
             <tr *ngFor="let t of teams">
               <td class="text-nowrap">{{t.username}}</td>
               <td class="text-nowrap">{{t.score}}</td>
+              <td class="text-nowrap bi bi-check2-circle text-success" *ngIf="t.gameFinished"></td>
+              <td class="text-nowrap bi bi-x-circle" *ngIf="!t.gameFinished"></td>
               <td class="text-nowrap"><button type="button" class="btn btn-sm btn-success bi bi-ui-checks" (click)="onButtonSeeTeam(t)"> Voir progression</button></td>
             </tr>
             </tbody>
