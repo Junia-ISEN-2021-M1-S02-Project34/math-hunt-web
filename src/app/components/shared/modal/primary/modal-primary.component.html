@@ -1,0 +1,30 @@
+<ng-template #primaryModal class="w-auto">
+  <div class="border border-2 rounded border-primary">
+
+    <div *ngIf="modalConfig.modalTitle" class="modal-header text-primary">
+      <h4 class="modal-title">
+        <span class="bi fs-2 me-2" [class]="modalConfig.bootstrapIcon"></span>
+        {{ modalConfig.modalTitle }}
+      </h4>
+    </div>
+    <div class="modal-body fs-5">
+      {{ modalConfig.modalText }}
+      <ng-content></ng-content>
+    </div>
+    <div class="modal-footer">
+      <button type="button"
+              class="btn btn-secondary"
+              (click)="dismiss()"
+              *ngIf="modalConfig.hideDismissButton === undefined">
+        {{ modalConfig.dismissButtonLabel }}
+      </button>
+      <button type="button"
+              class="btn btn-primary"
+              (click)="action()"
+              *ngIf="modalConfig.hideActionButton === undefined">
+        {{ modalConfig.actionButtonLabel }}
+      </button>
+    </div>
+
+  </div>
+</ng-template>

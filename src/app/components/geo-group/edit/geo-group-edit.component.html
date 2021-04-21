@@ -1,0 +1,160 @@
+<!-- back button -->
+<button class="btn btn-primary bi bi-arrow-return-left mt-3 ms-3 shadow" (click)="onButtonBack()" type="button"> Retour à la liste des GeoGroups</button>
+
+
+<app-modal-danger #dangerModal [modalConfig]="dangerModalConfig"></app-modal-danger>
+<app-modal-success #successModal [modalConfig]="successModalConfig"></app-modal-success>
+<app-alert-danger *ngIf="dangerAlertConfig" [alertConfig]="dangerAlertConfig"></app-alert-danger>
+
+<ng-container *ngIf="loading && !dangerAlertConfig">
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;"></div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!loading">
+
+  <!-- block edit geogroup -->
+  <div *ngIf="displayEditForm" class="container mt-1" style="max-width: 40em">
+
+    <div class="card shadow">
+
+      <!-- header -->
+      <div class="card-header pt-3">
+        <div class="d-flex flex-row align-items-center">
+          <h4 class="bi bi-file-medical me-2"></h4>
+          <h4 class="align-middle">Modifier un GeoGroup</h4>
+        </div>
+      </div>
+
+      <!-- body -->
+      <div class="card-body">
+
+        <form [formGroup]="editGeoGroupForm" class="d-flex flex-column" novalidate="novalidate" (ngSubmit)="onSubmitEditForm()">
+
+          <!-- name -->
+          <div class="mb-3">
+            <label class="form-label" for="name">Nom</label>
+            <input class="form-control" id="name" type="text" name="name" placeholder="Nom GeoGroup" autocomplete="off" required="required"
+                   formControlName="name"  [ngClass]="{ 'is-invalid': submitted && name.invalid }"/>
+          </div>
+
+          <div class="">
+
+            <div style="height: 300px;"
+                 leaflet
+                 [leafletOptions]="options"
+                 [leafletLayers]="layers"
+                 [(leafletCenter)]="center"
+                 [(leafletZoom)]="zoom"
+                 (leafletClick)="onMapMouseClick($event)">
+            </div>
+
+          </div>
+
+          <!-- radius -->
+          <div class="mb-3">
+            <label class="form-label" for="radius">Rayon (en mètres)</label>
+            <input class="form-control" id="radius" type="number" name="radius" placeholder="" required="required"
+                   formControlName="radius"  [ngClass]="{ 'is-invalid': submitted && radius.invalid }" (change)="onRadiusChange()"/>
+          </div>
+
+          <!-- pictureUrl -->
+          <div class="mb-3">
+            <label class="form-label" for="pictureUrl">
+              <a *ngIf="pictureUrl.value !== ''" class="bi bi-image" href="{{pictureUrl.value}}" target="_blank"> Image</a>
+              <ng-container *ngIf="pictureUrl.value === ''">Image</ng-container>
+            </label>
+            <input class="form-control" id="pictureUrl" type="text" name="pictureUrl" placeholder="https://"
+                   formControlName="pictureUrl"  [ngClass]="{ 'is-invalid': submitted && pictureUrl.invalid }"/>
+          </div>
+
+          <!-- submit -->
+          <div class="d-flex flex-row justify-content-end">
+            <div class="mb-0 align-self-end me-3">
+              <button type="submit" class="btn btn-outline-danger bi bi-x"
+                      (click)="displayEditForm=false;"> Annuler</button>
+            </div>
+            <div class="mb-0 align-self-end">
+              <button type="submit" class="btn btn-primary bi bi-pencil"> Modifier</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- block list enigmas by geoGroup -->
+  <div class="container mt-4">
+
+    <div class="card shadow">
+
+      <!-- header -->
+      <div class="card-header pt-3">
+        <div class="d-flex flex-column">
+          <div class="d-flex flex-row align-items-center text-primary mb-2">
+            <h4 class="bi bi-geo me-2"></h4>
+            <h4 class="align-middle me-1">GeoGroup </h4>
+            <h4 class="align-middle me-3">: {{geoGroup.name}}</h4>
+            <button type="button" class="btn btn-outline-primary bi bi-pencil ms-auto" (click)="displayEditForm = true;"> Modifier le GeoGroup</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!enigmas || enigmas.length <= 0" class="card-body">
+        <div class="fs-4 text-primary">
+          Aucune énigmes
+        </div>
+      </div>
+
+      <!-- body -->
+      <div *ngIf="enigmas && enigmas.length > 0" class="card-body p-0">
+
+        <div *ngIf="loadingInTab && !dangerAlertConfig" class="text-center">
+          <div class="spinner-border m-2 text-secondary text-center" style="width: 2rem; height: 2rem;"></div>
+        </div>
+
+        <ng-container *ngIf="!loadingInTab">
+
+          <div class="table-responsive">
+
+            <table class="table table-striped text-center align-middle mb-0">
+
+              <!-- table head -->
+              <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Nom</th>
+                <th scope="col">Rang</th>
+                <th scope="col">Active</th>
+                <th scope="col">Action</th>
+              </tr>
+              </thead>
+              <!-- table body -->
+              <tbody *ngIf="!loadingInTab" [sortablejs]="enigmas" [sortablejsOptions]="sortOptions">
+              <tr *ngFor="let e of enigmas">
+                <td class="bi bi-list fs-4"></td>
+                <td class="text-nowrap">{{e.name}}</td>
+                <td class="text-nowrap">{{e.order}}</td>
+                <td class="text-nowrap" *ngIf="e.isActive">Oui</td>
+                <td class="text-nowrap" *ngIf="!e.isActive">Non</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-sm btn-outline-warning bi bi-pencil" (click)="onButtonEnigma(e)"> Modifier l'énigme</button>
+                </td>
+              </tr>
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </ng-container>
+
+
+      </div>
+    </div>
+  </div>
+</ng-container>

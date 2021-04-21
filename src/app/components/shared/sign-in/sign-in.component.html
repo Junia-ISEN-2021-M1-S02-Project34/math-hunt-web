@@ -1,0 +1,50 @@
+<!-- Errors -->
+<app-alert-warning *ngIf="warningAlertConfig" [alertConfig]="warningAlertConfig"></app-alert-warning>
+
+<!-- Form -->
+<div class="container pt-5" style="max-width: 30em">
+
+  <div class="d-flex flex-column border border-2 p-3 rounded-3 bg-white">
+
+    <!-- header -->
+    <div class="text-center mb-2">
+      <object type="image/svg+xml" data="../../../../../assets/images/icon.svg" class="d-inline-block align-top" width="200" height="200">
+      </object>
+    </div>
+    <div class="fs-2 text-center mb-4">
+      Connexion à MathHunt
+    </div>
+
+    <!-- body -->
+    <div>
+
+      <form [formGroup]="authForm" class="d-flex flex-column" novalidate="novalidate" (ngSubmit)="onSubmit()">
+
+        <!-- first name -->
+        <div class="mb-3">
+          <label class="form-label" for="username">Nom d'utilisateur :</label>
+          <input class="form-control" id="username" type="text" name="username" autocomplete="off" required="required"
+                 formControlName="username"  [ngClass]="{ 'is-invalid': submitted && username.invalid }"/>
+        </div>
+
+        <!-- password -->
+        <div class="mb-3">
+          <label class="form-label" for="password">Mot de passe :</label>
+          <input class="form-control" id="password" type="password" name="password" autocomplete="off" required="required"
+                 formControlName="password"  [ngClass]="{ 'is-invalid': submitted && password.invalid }"/>
+        </div>
+
+        <!-- submit -->
+        <div class="d-grid">
+          <button [disabled]="loading" type="submit" class="btn btn-primary">
+            <span *ngIf="!loading" class="" role="status" aria-hidden="true">Se connecter</span>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

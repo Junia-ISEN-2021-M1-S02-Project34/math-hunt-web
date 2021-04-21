@@ -1,0 +1,68 @@
+<app-modal-danger #dangerModal [modalConfig]="dangerModalConfig"></app-modal-danger>
+<app-modal-success #successModal [modalConfig]="successModalConfig"></app-modal-success>
+<app-alert-danger *ngIf="dangerAlertConfig" [alertConfig]="dangerAlertConfig"></app-alert-danger>
+
+<ng-container *ngIf="loading && !dangerAlertConfig">
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;"></div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!loading">
+
+  <!-- back button -->
+  <button class="btn btn-primary bi bi-plus-circle mt-3 ms-3 shadow" (click)="onButtonNew()" type="button"> Nouvelle énigme</button>
+
+  <!-- block list enigma -->
+  <div class="container mt-4" *ngFor="let g of geoGroups">
+
+    <div class="card shadow">
+
+      <!-- header -->
+      <div class="card-header pt-3 text-primary">
+        <div class="d-flex flex-row align-items-center">
+          <h4 class="bi bi-list me-2"></h4>
+          <h4 class="align-middle">GeoGroup : {{g.name}}</h4>
+        </div>
+      </div>
+
+      <!-- body -->
+      <div class="card-body p-0">
+
+        <div class="table-responsive">
+
+          <table class="table table-striped text-center align-middle mb-0">
+            <!-- table head -->
+            <thead>
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Rang</th>
+              <th scope="col">Active</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <!-- table body -->
+            <tbody>
+            <tr *ngFor="let e of g.enigmas">
+              <td class="text-nowrap">{{e.name}}</td>
+              <td class="text-nowrap">{{e.order}}</td>
+              <td class="text-nowrap" *ngIf="e.isActive">Oui</td>
+              <td class="text-nowrap" *ngIf="!e.isActive">Non</td>
+              <td class="text-center">
+                <div class="d-flex flex-row justify-content-center">
+                  <button type="button" class="btn btn btn-sm btn-outline-primary bi bi-pencil me-2" (click)="onButtonEdit(e)"> Modifier</button>
+                  <button type="button" class="btn btn-sm btn-outline-danger bi bi-trash" (click)="onButtonDelete(e)"> Supprimer</button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</ng-container>
