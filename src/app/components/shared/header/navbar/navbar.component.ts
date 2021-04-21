@@ -14,6 +14,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const currentUser = this.authenticationService.currentUserValue;
+    if (currentUser.accessToken){
+      this.logged = true;
+    }
   }
 
   onLogout(): void{
@@ -21,7 +25,7 @@ export class NavbarComponent implements OnInit {
   }
 
   changedState(logged): void {
-    this.logged = logged;
+    this.logged = (logged);
   }
 
 }

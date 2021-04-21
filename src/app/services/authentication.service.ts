@@ -18,7 +18,7 @@ export class AuthenticationService {
   public currentUser: Observable<JwtUser>;
 
   constructor(private http: HttpClient,
-              private router: Router,) {
+              private router: Router) {
     this.currentUserSubject = new BehaviorSubject<JwtUser>(JSON.parse(localStorage.getItem('user') || '{}'));
     this.currentUser = this.currentUserSubject.asObservable();
   }
