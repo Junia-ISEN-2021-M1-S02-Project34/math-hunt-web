@@ -205,7 +205,6 @@ export class EnigmaEditComponent implements OnInit {
   onSubmitHintForm(): void{
     this.hintsFormSubmitted = true;
     this.dangerAlertConfig = undefined;
-    console.log(this.hintsForm.value.hints);
     if (this.hintsForm.valid) {
       this.putHints();
       this.hintsFormSubmitted = false;

@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {JwtUser} from '../interfaces/jwt-user.interface';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<JwtUser>;
   public currentUser: Observable<JwtUser>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private router: Router) {
     this.currentUserSubject = new BehaviorSubject<JwtUser>(JSON.parse(localStorage.getItem('user') || '{}'));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -42,5 +44,6 @@ export class AuthenticationService {
     localStorage.removeItem('user');
     this.currentUserSubject = new BehaviorSubject<JwtUser>({accessToken: '', username: ''});
     this.getLoggedState.emit(false);
+    this.router.navigate(['/sign-in']);
   }
 }
