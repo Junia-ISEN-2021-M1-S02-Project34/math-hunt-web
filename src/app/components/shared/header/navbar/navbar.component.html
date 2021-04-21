@@ -16,10 +16,15 @@
       <!-- navbar content on the right-->
       <ul class="nav navbar-nav end-0">
         <li class="nav-item dropdown">
-          <button class="btn btn-secondary nav-item" type="button" id="dropDownUser" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" (click)="onLogout()">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropDownUser" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
             <span class="bi bi-lock-fill me-1"></span>
-              Déconnexion
+            {{currentUser.username}}
           </button>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="dropDownUser">
+            <li><button class="dropdown-item" type="button" (click)="onLogout()">Déconnexion</button></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" routerLinkActive="active" routerLink="admin">Espace Utilisateur</a></li>
+          </ul>
         </li>
       </ul>
     </div>

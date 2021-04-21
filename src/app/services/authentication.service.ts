@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {JwtUser} from '../interfaces/jwt-user.interface';
 import {Router} from '@angular/router';
+import {IEnigma} from '../interfaces/enigma.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +46,9 @@ export class AuthenticationService {
     this.currentUserSubject = new BehaviorSubject<JwtUser>({accessToken: '', username: ''});
     this.getLoggedState.emit(false);
     this.router.navigate(['/sign-in']);
+  }
+
+  updatePassword(username, password): Observable<any> {
+    return this.http.put<any>(`${environment.apiHostname}/admins/update/admin/${username}`, {password});
   }
 }
