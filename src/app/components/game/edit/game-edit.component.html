@@ -3,6 +3,7 @@
   <button class="btn btn-primary bi bi-arrow-return-left mt-3 ms-3 shadow" (click)="onButtonBack()" type="button"> Retour à la liste des parties</button>
   <button *ngIf="!game.isStarted" class="btn btn-warning bi bi-people mt-3 ms-3 shadow" (click)="onButtonAddTeam()" type="button"> Ajouter une nouvelle équipe</button>
   <button *ngIf="!game.isStarted" class="btn btn-success bi bi-controller mt-3 ms-3 shadow" (click)="onButtonStart()" type="button"> Commencer la partie</button>
+  <button *ngIf="game.isStarted" class="btn btn-danger bi bi-controller mt-3 ms-3 shadow" (click)="onButtonStop()" type="button"> Arrêter la partie</button>
 </div>
 
 
@@ -36,7 +37,7 @@
         </div>
         <div class="d-flex flex-row align-items-center text-danger" *ngIf="!game.isStarted">
           <h4 class="bi bi-controller me-2"></h4>
-          <h4 class="align-middle">Partie non débutée</h4>
+          <h4 class="align-middle">Partie arrêtée</h4>
         </div>
       </div>
 
@@ -52,6 +53,7 @@
               <th scope="col">Nom</th>
               <th scope="col">Mot de passe</th>
               <th scope="col">Score</th>
+              <th scope="col">Partie terminée</th>
               <th scope="col">Action</th>
             </tr>
             </thead>
@@ -61,6 +63,8 @@
               <td class="text-nowrap font-monospace">{{t.username}}</td>
               <td class="text-nowrap font-monospace">{{t.password}}</td>
               <td class="text-nowrap">{{t.score}}</td>
+              <td class="text-nowrap bi bi-check2-circle text-success" *ngIf="t.gameFinished"></td>
+              <td class="text-nowrap bi bi-x-circle" *ngIf="!t.gameFinished"></td>
               <td class="text-center">
                 <div class="d-flex flex-row justify-content-center">
                   <button type="button" class="btn btn-sm btn-success bi bi-ui-checks" (click)="onButtonSeeTeam(t)"> Voir progression</button>

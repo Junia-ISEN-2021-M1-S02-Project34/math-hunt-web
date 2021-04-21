@@ -85,6 +85,19 @@ export class GameEditComponent implements OnInit {
     });
   }
 
+  async onButtonStop(): Promise<void> {
+    this.dangerAlertConfig = undefined;
+    this.dangerModalConfig.modalTitle = 'Confirmer l\'arrêt ?';
+    this.dangerModalConfig.modalText = 'Voulez-vous vraiment arrêter la partie ?';
+    this.dangerModalConfig.actionButtonLabel = 'Oui';
+    this.dangerModalConfig.dismissButtonLabel = 'Annuler';
+    await this.modalDangerComponent.open().then((r) => {
+      if (r === 'Oui') {
+        this.stopGame();
+      }
+    });
+  }
+
   onButtonAddTeam(): void {
     this.loading = true;
     this.dangerAlertConfig = undefined;
@@ -150,6 +163,22 @@ export class GameEditComponent implements OnInit {
         this.dangerAlertConfig = {} as AlertConfig;
         this.dangerAlertConfig.alertTitle = 'Erreur lors du lancement de la partie.';
         this.dangerAlertConfig.alertText = 'Le lancement de la partie a échoué. Le serveur a renvoyé une erreur. Veuillez rafraichir la page.';
+        this.dangerAlertConfig.alertError = error.message;
+        this.dangerAlertConfig.refreshButton = true;
+      });
+  }
+  stopGame(): void{
+    this.loading = true;
+    this.gameService.stopGame(this.game).subscribe(() => {
+        this.loading = false;
+        this.fetchInfos();
+        this.refreshData();
+      },
+      error => {
+        this.loading = false;
+        this.dangerAlertConfig = {} as AlertConfig;
+        this.dangerAlertConfig.alertTitle = 'Erreur lors de l\'arrêt de la partie.';
+        this.dangerAlertConfig.alertText = 'L\'arrêt de la partie a échoué. Le serveur a renvoyé une erreur. Veuillez rafraichir la page.';
         this.dangerAlertConfig.alertError = error.message;
         this.dangerAlertConfig.refreshButton = true;
       });
