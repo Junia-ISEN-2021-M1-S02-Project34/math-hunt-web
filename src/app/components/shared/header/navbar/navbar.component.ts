@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../../services/authentication.service';
+import {JwtUser} from '../../../../interfaces/jwt-user.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -8,14 +9,15 @@ import {AuthenticationService} from '../../../../services/authentication.service
 })
 export class NavbarComponent implements OnInit {
   logged: boolean;
+  currentUser: JwtUser;
 
   constructor(private authenticationService: AuthenticationService) {
     authenticationService.getLoggedState.subscribe(logged => this.changedState(logged));
   }
 
   ngOnInit(): void {
-    const currentUser = this.authenticationService.currentUserValue;
-    if (currentUser.accessToken){
+    this.currentUser = this.authenticationService.currentUserValue;
+    if (this.currentUser.accessToken){
       this.logged = true;
     }
   }
@@ -26,6 +28,7 @@ export class NavbarComponent implements OnInit {
 
   changedState(logged): void {
     this.logged = (logged);
+    this.currentUser = this.authenticationService.currentUserValue;
   }
 
 }

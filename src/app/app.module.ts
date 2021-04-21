@@ -16,7 +16,6 @@ import {ModalSuccessComponent} from './components/shared/modal/success/modal-suc
 import {ModalDangerComponent} from './components/shared/modal/danger/modal-danger.component';
 import {ModalWarningComponent} from './components/shared/modal/warning/modal-warning.component';
 import {ModalInfoComponent} from './components/shared/modal/info/modal-info.component';
-import {SignUpComponent} from './components/shared/sign-up/sign-up.component';
 import {GeoGroupComponent} from './components/geo-group/geo-group.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {GeoGroupEditComponent} from './components/geo-group/edit/geo-group-edit.component';
@@ -30,6 +29,7 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {GameEditComponent} from './components/game/edit/game-edit.component';
 import {TeamComponent} from './components/team/team.component';
 import {LeaderboardComponent} from './components/game/leaderboard/leaderboard.component';
+import {AdminComponent} from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,6 @@ import {LeaderboardComponent} from './components/game/leaderboard/leaderboard.co
     ModalDangerComponent,
     ModalWarningComponent,
     ModalInfoComponent,
-    SignUpComponent,
     GeoGroupComponent,
     GeoGroupEditComponent,
     EnigmaComponent,
@@ -55,6 +54,7 @@ import {LeaderboardComponent} from './components/game/leaderboard/leaderboard.co
     GameEditComponent,
     TeamComponent,
     LeaderboardComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
