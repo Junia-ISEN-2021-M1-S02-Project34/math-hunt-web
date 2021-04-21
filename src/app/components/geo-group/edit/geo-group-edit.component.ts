@@ -12,7 +12,7 @@ import {GeoGroupService} from '../../../services/geoGroup.service';
 import {SortableOptions} from 'sortablejs';
 import {map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
-import {circle, featureGroup, FeatureGroup, icon, latLng, Marker, marker, polygon, tileLayer} from 'leaflet';
+import {circle, icon, latLng, marker, tileLayer} from 'leaflet';
 
 @Component({
   selector: 'app-geo-group-edit',
@@ -210,7 +210,7 @@ export class GeoGroupEditComponent implements OnInit {
     toEdit.positionX = this.geoGroup.positionX;
     toEdit.positionY = this.geoGroup.positionY;
     this.geoGroupService.putGeoGroup(toEdit).subscribe(async () => {
-        this.successModalConfig.modalText = 'GeoGroup modifiée avec succès !';
+        this.successModalConfig.modalText = 'GeoGroup modifié avec succès !';
         this.successModalConfig.closeAfterXSeconds = 3;
         this.editGeoGroupForm.reset();
         this.displayEditForm = true;

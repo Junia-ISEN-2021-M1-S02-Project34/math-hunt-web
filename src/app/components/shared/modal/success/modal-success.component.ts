@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ModalConfig} from '../modal.config';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ModalDangerComponent} from '../danger/modal-danger.component';
