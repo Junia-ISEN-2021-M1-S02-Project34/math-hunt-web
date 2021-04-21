@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from '../components/home/home.component';
 import {FourOFourComponent} from '../components/shared/four-o-four/four-o-four.component';
 import {SignInComponent} from '../components/shared/sign-in/sign-in.component';

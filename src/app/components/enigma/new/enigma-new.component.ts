@@ -4,7 +4,7 @@ import {ModalSuccessComponent} from '../../shared/modal/success/modal-success.co
 import {IGeoGroup} from '../../../interfaces/geoGroup.interface';
 import {ModalConfig} from '../../shared/modal/modal.config';
 import {AlertConfig} from '../../shared/alert/alert.config';
-import {AbstractControl, Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {EnigmaService} from '../../../services/enigma.service';
 import {IEnigma} from '../../../interfaces/enigma.interface';
@@ -17,7 +17,7 @@ import {PropositionService} from '../../../services/proposition.service';
 import {HintService} from '../../../services/hint.service';
 import {map} from 'rxjs/operators';
 import {forkJoin} from 'rxjs';
-import {circle, icon, latLng, marker, tileLayer} from 'leaflet';
+import {icon, latLng, marker, tileLayer} from 'leaflet';
 
 @Component({
   selector: 'app-enigma-new',

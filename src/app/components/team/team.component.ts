@@ -1,14 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ModalDangerComponent} from '../shared/modal/danger/modal-danger.component';
 import {ModalSuccessComponent} from '../shared/modal/success/modal-success.component';
-import {IGame} from '../../interfaces/game.interface';
 import {ITeam} from '../../interfaces/team.interface';
-import {SortableOptions} from 'sortablejs';
 import {ModalConfig} from '../shared/modal/modal.config';
 import {AlertConfig} from '../shared/alert/alert.config';
-import {FormGroup} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {GameService} from '../../services/game.service';
 import {TeamService} from '../../services/team.service';
 
 @Component({
