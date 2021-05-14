@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {IGeoGroup} from '../interfaces/geoGroup.interface';
 import {map} from 'rxjs/operators';
+import {IEnigma} from '../interfaces/enigma.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,11 @@ export class GeoGroupService {
 
   getGeoGroups(): Observable<IGeoGroup[]> {
     return this.http.get<any>(`${this.apiUrl}/get/geoGroups`).pipe(
-      map(res => res.geoGroups)
+      map(res => res.geoGroups.sort((a: IGeoGroup, b: IGeoGroup) => {
+        if (a.order < b.order) { return -1; }
+        if (a.order > b.order) { return 1; }
+        return 0;
+      }))
     );
   }
 

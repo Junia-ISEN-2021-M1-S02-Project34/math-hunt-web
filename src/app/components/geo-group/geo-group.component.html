@@ -106,14 +106,18 @@
             <!-- table head -->
             <thead>
             <tr>
+              <th scope="col"></th>
               <th scope="col">Nom</th>
+              <th scope="col">Ordre</th>
               <th scope="col">Action</th>
             </tr>
             </thead>
             <!-- table body -->
-            <tbody>
+            <tbody [sortablejs]="geoGroups" [sortablejsOptions]="sortOptions">
             <tr *ngFor="let gg of geoGroups">
+              <td class="bi bi-list fs-4"></td>
               <td class="text-nowrap">{{gg.name}}</td>
+              <td class="text-nowrap">{{gg.order}}</td>
               <td class="text-center">
                 <div class="d-flex flex-row justify-content-center">
                   <button type="button" class="btn btn btn-sm btn-outline-primary bi bi-pencil me-2" (click)="onButtonEdit(gg)"> Modifier</button>
