@@ -8,6 +8,10 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {GeoGroupService} from '../../services/geoGroup.service';
 import {circle, icon, latLng, marker, tileLayer} from 'leaflet';
+import {SortableOptions} from 'sortablejs';
+import {map} from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
+import {IEnigma} from '../../interfaces/enigma.interface';
 
 @Component({
   selector: 'app-geo-group',
@@ -26,6 +30,9 @@ export class GeoGroupComponent implements OnInit {
   dangerAlertConfig: AlertConfig;
 
   loading: boolean;
+
+  sortOptions: SortableOptions = {
+  };
 
   // form
   displayNewGeoGroupForm: boolean;
@@ -51,6 +58,11 @@ export class GeoGroupComponent implements OnInit {
     this.refreshData();
     this.createFormControls();
     this.createForm();
+    this.sortOptions = {
+      onUpdate: (event: any) => {
+        this.updateGeoGroupsOrder();
+      }
+    };
   }
 
   /******************************************** */
@@ -175,6 +187,28 @@ export class GeoGroupComponent implements OnInit {
   /******************************************** */
   /************  Forms treatment    *************/
   /******************************************** */
+
+  updateGeoGroupsOrder(): void{
+    this.loading = true;
+    const requests = [];
+    for (const [index, value] of this.geoGroups.entries()){
+      value.order = index + 1;
+      requests.push(this.geoGroupService.putGeoGroup(value).pipe(map((res) => res)));
+    }
+    forkJoin(
+      requests
+    ).subscribe(async (geoGroups: IGeoGroup[]) => {
+        this.refreshData();
+      },
+      error => {
+        this.loading = false;
+        this.dangerAlertConfig = {} as AlertConfig;
+        this.dangerAlertConfig.alertTitle = 'Erreur lors de la modification de l\'ordre des géogroups';
+        this.dangerAlertConfig.alertText = 'Veuillez réessayer.';
+        this.dangerAlertConfig.dismissButton = true;
+        this.dangerAlertConfig.alertError = error.message;
+      });
+  }
 
   deleteGeoGroup(geoGroup): void{
     this.geoGroupService.deleteGeoGroup(geoGroup).subscribe(async () => {
